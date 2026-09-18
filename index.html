@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início - SUSi!</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Preservação exata do design e layout da imagem */
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        .container-principal {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .titulo-secao {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 800;
+            color: #0d1b2a;
+            margin-bottom: 32px;
+        }
+
+        .grid-servicos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-servicos {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-servico {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .card-servico:hover {
+            border-color: #0056b3;
+            background-color: #f0f7ff;
+            transform: translateY(-2px);
+        }
+
+        .icone-servico {
+            font-size: 36px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .card-servico h3 {
+            font-size: 18px;
+            color: #0056b3;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+
+        .card-servico p {
+            font-size: 13.5px;
+            color: #5a6578;
+            margin: 0;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA SUPERIOR DE NAVEGAÇÃO -->
+    <header class="aws-navbar">
+        <div class="aws-nav-container">
+            <div class="aws-nav-left">
+                <a href="index.html" class="aws-logo">
+                    <span class="logo-susi">SUSi!</span>
+                </a>
+                <nav class="aws-nav-links">
+                    <a href="index.html" class="ativo">Início</a>
+                    <a href="marcar-consulta.html">Marcar Consulta</a>
+                    <a href="medicos.html">Médicos</a>
+                    <a href="meus-atendimentos.html">Meus Atendimentos</a>
+                </nav>
+            </div>
+            <div class="aws-nav-right">
+                <a href="login.html" class="aws-btn-login">Criar conta / Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENTOR EM CARTÃO BRANCO DA IMAGEM -->
+    <main class="container-principal">
+
+        <h1 class="titulo-secao">Selecione o serviço desejado</h1>
+
+        <div class="grid-servicos">
+            
+            <!-- CARD 1: MARCAR CONSULTA -->
+            <a href="marcar-consulta.html" class="card-servico">
+                <span class="icone-servico">📅</span>
+                <h3>Marcar Consulta</h3>
+                <p>Agende uma consulta rápida ou presencial.</p>
+            </a>
+
+            <!-- CARD 2: MÉDICOS EM ATENDIMENTO -->
+            <a href="medicos.html" class="card-servico">
+                <span class="icone-servico">🧑‍⚕️</span>
+                <h3>Médicos em Atendimento</h3>
+                <p>Consulte a lista e os horários dos profissionais.</p>
+            </a>
+
+            <!-- CARD 3: MEUS ATENDIMENTOS (Substitui Central de Atendimento) -->
+            <a href="meus-atendimentos.html" class="card-servico">
+                <span class="icone-servico">📋</span>
+                <h3>Meus Atendimentos</h3>
+                <p>Consulte todas as suas consultas e o seu histórico.</p>
+            </a>
+
+            <!-- CARD 4: LOGIN -->
+            <a href="login.html" class="card-servico">
+                <span class="icone-servico">🔑</span>
+                <h3>Login</h3>
+                <p>Aceda à sua conta e históricos médicos.</p>
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

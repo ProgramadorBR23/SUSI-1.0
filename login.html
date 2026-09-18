@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SUSi!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR PADRÃO -->
+    <header class="aws-navbar">
+        <div class="aws-nav-container">
+            <div class="aws-nav-left">
+                <a href="index.html" class="aws-logo">
+                    <span class="logo-susi">SUSi!</span>
+                </a>
+                <nav class="aws-nav-links">
+                    <a href="index.html">Início</a>
+                    <a href="marcar-consulta.html">Marcar Consulta</a>
+                    <a href="medicos.html">Médicos</a>
+                    <a href="central-atendimento.html">Ajuda</a>
+                </nav>
+            </div>
+            <div class="aws-nav-right">
+                <a href="index.html" class="aws-btn-login">Voltar ao Início</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO DE LOGIN / MANUTENÇÃO -->
+    <main class="main-container">
+        <div class="login-box">
+            
+            <!-- ÁREA DA ILUSTRAÇÃO DOS ANIMAIS EM REFORMA -->
+            <div class="reforma-container">
+                <img src="Em obras.jfif" alt="Animais do SUSi fazendo reforma no servidor" class="img-reforma">
+                <div class="tag-status">🛠️ Sistema em Atualização</div>
+            </div>
+
+            <h2>Acesso ao Portal SUSi!</h2>
+            <p class="mensagem-reforma">
+                A capivara, a arara, a iguana e o mico-leão-dourado estão a fazer ajustes e melhorias no nosso <strong>site</strong>! Retorne a página inicial.
+            </p>
+
+            <!-- FORMULÁRIO TEMPORARIAMENTE DESATIVADO -->
+            <form class="form-login" onsubmit="return false;">
+                <div class="campo-input">
+                    <label for="cpf">CPF ou E-mail</label>
+                    <input type="text" id="cpf" placeholder="000.000.000-00" disabled>
+                </div>
+
+                <div class="campo-input">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" placeholder="••••••••" disabled>
+                </div>
+
+                <button type="button" class="btn-login-disabled" disabled>
+                    Login Indisponível no Momento
+                </button>
+            </form>
+
+            <a href="index.html" class="link-voltar">← Voltar para a página principal</a>
+        </div>
+    </main>
+
+</body>
+</html>

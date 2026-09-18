@@ -1,0 +1,1105 @@
+/* ==========================================================================
+   1. RESET E CONFIGURAÇÕES GLOBAIS
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #16191f;
+    width: 100%;
+}
+
+/* ==========================================================================
+   2. BARRA DE NAVEGAÇÃO SUPERIOR (ESTILO AWS)
+   ========================================================================== */
+.aws-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaedd1;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.aws-nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.aws-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.aws-logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logo-susi {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0056b3;
+    letter-spacing: -0.5px;
+}
+
+.aws-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.aws-nav-links a {
+    text-decoration: none;
+    color: #414750;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.15s ease;
+}
+
+.aws-nav-links a:hover {
+    color: #0056b3;
+}
+
+.aws-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.aws-search-box {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #8795a1;
+    border-radius: 4px;
+    padding: 6px 12px;
+    width: 260px;
+}
+
+.aws-search-box:focus-within {
+    border-color: #0056b3;
+}
+
+.search-icon {
+    font-size: 14px;
+    margin-right: 8px;
+    opacity: 0.6;
+}
+
+.aws-search-box input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+}
+
+.aws-btn-login {
+    background-color: #16191f;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 22px;
+    border-radius: 20px;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.aws-btn-login:hover {
+    background-color: #232f3e;
+}
+
+/* ==========================================================================
+   3. HERO BANNER (ESTILO DESTAQUE AWS)
+   ========================================================================== */
+.hero-section {
+    background: linear-gradient(180deg, #eef4ff 0%, #f8f9fa 100%);
+    padding: 40px 24px 30px 24px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.breadcrumb {
+    font-size: 13px;
+    color: #4a5568;
+    margin-bottom: 16px;
+}
+
+.hero-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #16191f;
+    margin-bottom: 12px;
+}
+
+.hero-subtitle {
+    font-size: 18px;
+    color: #414750;
+    max-width: 800px;
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-primary-hero {
+    background-color: #16191f;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 24px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.btn-secondary-hero {
+    background-color: #ffffff;
+    color: #16191f;
+    border: 2px solid #16191f;
+    padding: 10px 24px;
+    border-radius: 24px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+/* ==========================================================================
+   4. CONTEÚDO PRINCIPAL E CARDS
+   ========================================================================== */
+.main-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 24px;
+}
+
+.painel-agendamento, .painel-consultas {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.etapa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #eef6ff;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 6px solid #0056b3;
+    margin-bottom: 20px;
+}
+
+.etapa-titulo {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.btn-audio {
+    background: #0056b3;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.campo-grande {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+.campo-grande:focus {
+    border-color: #0056b3;
+}
+
+.btn-passo {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-proximo {
+    background: #2e7d32;
+    color: white;
+}
+
+.controles-ordem {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.btn-ordem {
+    flex: 1;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #cbd5e0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-ordem.ativo {
+    background: #0056b3;
+    color: white;
+    border-color: #0056b3;
+}
+
+.mensagem-vazia {
+    text-align: center;
+    padding: 20px;
+    color: #718096;
+}
+
+/* ==========================================================================
+   5. RESPONSIVIDADE
+   ========================================================================== */
+@media (max-width: 900px) {
+    .aws-nav-links {
+        display: none;
+    }
+
+    .controles-ordem {
+        flex-direction: column;
+    }
+}
+/* ==========================================================================
+   MENU INICIAL DE SERVIÇOS (4 OPÇÕES)
+   ========================================================================== */
+.menu-inicial {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.menu-titulo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #16191f;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.grid-servicos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card-servico {
+    background-color: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-servico:hover {
+    border-color: #0056b3;
+    background-color: #ffffff;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 86, 179, 0.12);
+}
+
+.servico-icone {
+    font-size: 40px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.card-servico h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0056b3;
+    margin-bottom: 8px;
+}
+
+.card-servico p {
+    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.4;
+}
+/* ==========================================================================
+   TELA DE LOGIN / MANUTENÇÃO NO BACK-END
+   ========================================================================== */
+.login-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 520px;
+    margin: 40px auto;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.reforma-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.img-reforma {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.tag-status {
+    display: inline-block;
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.login-box h2 {
+    font-size: 24px;
+    color: #16191f;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.mensagem-reforma {
+    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+
+.campo-input label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4a5568;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.campo-input input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    background-color: #f7fafc;
+    color: #a0aec0;
+    cursor: not-allowed;
+}
+
+.btn-login-disabled {
+    width: 100%;
+    padding: 14px;
+    background-color: #e2e8f0;
+    color: #a0aec0;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: not-allowed;
+    margin-top: 8px;
+}
+
+.link-voltar {
+    display: inline-block;
+    margin-top: 20px;
+    color: #0056b3;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.link-voltar:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   RESET E ESTILOS BASE
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #16191f;
+}
+
+/* NAVBAR */
+.aws-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaedd1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.aws-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.aws-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.logo-susi {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0056b3;
+}
+
+.aws-nav-links a {
+    text-decoration: none;
+    color: #414750;
+    font-size: 15px;
+    margin-right: 16px;
+    font-weight: 500;
+}
+
+.aws-nav-links a.ativo {
+    color: #0056b3;
+    font-weight: 700;
+}
+
+.aws-btn-login {
+    background-color: #16191f;
+    color: white;
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* CONTAINER PRINCIPAL */
+.main-container {
+    max-width: 900px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+/* BANNER DE AVISO ILUSTRATIVO */
+.alerta-ilustrativo {
+    background-color: #fff9db;
+    border: 2px solid #ffe066;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.icone-alerta {
+    font-size: 24px;
+}
+
+.texto-alerta {
+    font-size: 15px;
+    color: #856404;
+}
+
+/* PAINEL DE AGENDAMENTO */
+.painel-agendamento, .painel-consultas {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    margin-bottom: 24px;
+}
+
+.etapa { display: none; }
+.etapa.ativa { display: block; }
+
+.etapa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ebf8ff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border-left: 6px solid #3182ce;
+    margin-bottom: 20px;
+}
+
+.etapa-titulo {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2b6cb0;
+}
+
+.btn-audio {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.campo-grande {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 18px;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+.campo-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    resize: vertical;
+    outline: none;
+}
+
+.label-data {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+/* GRID DE OPÇÕES E CARDS */
+.grid-opcoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.card-opcao {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    background: #f8fafc;
+}
+
+.card-opcao.selecionado {
+    border-color: #3182ce;
+    background: #ebf8ff;
+}
+
+.card-opcao .icone { font-size: 32px; display: block; margin-bottom: 6px; }
+.card-opcao .texto { font-size: 16px; font-weight: bold; }
+
+/* MÉDICOS */
+.lista-medicos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.card-medico {
+    border: 2px solid #e2e8f0;
+    padding: 14px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-medico.ativo {
+    border-color: #0056b3;
+    background: #f0f7ff;
+}
+
+/* DETECÇÃO DE FEBRE */
+.box-febre-oculto { display: none; }
+.box-febre-visivel {
+    display: block;
+    background: #fff5f5;
+    border: 2px solid #feb2b2;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.alerta-febre-header {
+    color: #c53030;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* BOTÕES DE PASSO */
+.botoes-passo {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-passo {
+    flex: 1;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-proximo { background: #2e7d32; color: white; }
+.btn-confirmar { background: #0056b3; color: white; }
+.btn-voltar { background: #e2e8f0; color: #4a5568; }
+
+/* ==========================================================================
+   RESET E CONFIGURAÇÕES DE LAYOUT
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #16191f;
+}
+
+/* NAVBAR BANNER */
+.aws-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eaedd1;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.aws-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.aws-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.logo-susi {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0056b3;
+}
+
+.aws-nav-links a {
+    text-decoration: none;
+    color: #414750;
+    font-size: 15px;
+    margin-right: 16px;
+    font-weight: 500;
+}
+
+.aws-nav-links a.ativo {
+    color: #0056b3;
+    font-weight: 700;
+}
+
+.aws-btn-login {
+    background-color: #16191f;
+    color: white;
+    text-decoration: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* CONTAINER PRINCIPAL */
+.main-container {
+    max-width: 900px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+/* BANNER AVISO */
+.alerta-ilustrativo {
+    background-color: #fff9db;
+    border: 2px solid #ffe066;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.icone-alerta { font-size: 24px; }
+.texto-alerta { font-size: 15px; color: #856404; }
+
+/* BARRA DE PROGRESSO DINÂMICA */
+.progresso-wrapper {
+    margin-bottom: 20px;
+}
+
+.progresso-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: bold;
+    color: #4a5568;
+    margin-bottom: 6px;
+}
+
+.progresso-barra-bg {
+    background: #e2e8f0;
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progresso-barra-fill {
+    background: #3182ce;
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* PAINÉIS E ETAPAS */
+.painel-agendamento, .painel-consultas {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    margin-bottom: 24px;
+}
+
+.etapa { display: none; }
+.etapa.ativa { display: block; }
+
+.etapa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ebf8ff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border-left: 6px solid #3182ce;
+    margin-bottom: 20px;
+}
+
+.etapa-titulo { font-size: 18px; font-weight: bold; color: #2b6cb0; }
+
+.btn-audio {
+    background: #3182ce;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.campo-grande {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 18px;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+.campo-textarea {
+    width: 100%;
+    height: 100px;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #cbd5e0;
+    border-radius: 10px;
+    resize: vertical;
+    outline: none;
+}
+
+.label-data {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+/* CARDS DE OPÇÕES */
+.grid-opcoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.grid-opcoes-duas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.card-opcao {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+}
+
+.card-opcao.selecionado {
+    border-color: #3182ce;
+    background: #ebf8ff;
+}
+
+.card-opcao .icone { font-size: 32px; display: block; margin-bottom: 6px; }
+.card-opcao .texto { font-size: 16px; font-weight: bold; }
+
+/* ALERTAS CONDICIONAIS */
+.box-febre-oculto, .box-alergia-oculto, .alerta-filtro-oculto { display: none; }
+
+.box-febre-visivel, .box-alergia-visivel {
+    display: block;
+    background: #fff5f5;
+    border: 2px solid #feb2b2;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.alerta-filtro-visivel {
+    display: block;
+    background: #fffbea;
+    border: 1px solid #ffe3a8;
+    color: #b7791f;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.alerta-febre-header { color: #c53030; margin-bottom: 10px; font-size: 14px; }
+
+/* LISTA DE MÉDICOS COM AVATAR */
+.lista-medicos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.card-medico {
+    border: 2px solid #e2e8f0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.card-medico.ativo {
+    border-color: #0056b3;
+    background: #f0f7ff;
+}
+
+.avatar-medico {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* BOTÕES DE PASSO */
+.botoes-passo { display: flex; gap: 12px; }
+
+.btn-passo {
+    flex: 1;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-proximo { background: #2e7d32; color: white; }
+.btn-confirmar { background: #0056b3; color: white; }
+.btn-voltar { background: #e2e8f0; color: #4a5568; }
+
+/* CONSULTAS AGENDADAS E FILTROS DE TIPO */
+.consultas-header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-auto-ordem {
+    background: #edf2f7;
+    color: #4a5568;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e0;
+}
+
+.filtro-tipo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    background: #f7fafc;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #edf2f7;
+    flex-wrap: wrap;
+}
+
+.filtro-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4a5568;
+}
+
+.botoes-filtro-tipo {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.btn-filtro-tipo {
+    padding: 8px 14px;
+    border: 1px solid #cbd5e0;
+    background: white;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-filtro-tipo.ativo {
+    background: #0056b3;
+    color: white;
+    border-color: #0056b3;
+}
+
+.card-consulta {
+    border: 1px solid #e2e8f0;
+    border-left-width: 8px;
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 14px;
+    background: #f8fafc;
+}
+
+.card-consulta.p-3 { border-left-color: #e53e3e; }
+.card-consulta.p-2 { border-left-color: #d69e2e; }
+.card-consulta.p-1 { border-left-color: #38a169; }
+
+.consulta-header { display: flex; justify-content: space-between; margin-bottom: 10px; }
+.consulta-paciente { font-weight: bold; font-size: 18px; }
+.consulta-tag { padding: 4px 10px; border-radius: 12px; font-size: 13px; font-weight: bold; }
+.tag-3 { background: #fed7d7; color: #9b2c2c; }
+.tag-2 { background: #fefcbf; color: #975a16; }
+.tag-1 { background: #c6f6d5; color: #22543d; }
+
+.consulta-detalhe { margin-bottom: 6px; font-size: 15px; }
+
+.consulta-acoes { display: flex; justify-content: space-between; margin-top: 14px; }
+
+.btn-ouvir-card, .btn-cancelar-card {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-ouvir-card { background: #ebf8ff; color: #2b6cb0; }
+.btn-cancelar-card { background: #fff5f5; color: #e53e3e; }
+.mensagem-vazia { text-align: center; color: #718096; padding: 20px; }
