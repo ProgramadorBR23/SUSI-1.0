@@ -3,209 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Atendimentos - SUSi!</title>
+    <title>SUSI! - Meus Atendimentos</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Favicon-Susi.jfif">
     <style>
-        /* Estilos específicos para a página Meus Atendimentos */
-        body {
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        .grid-consultas {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .container-principal {
-            max-width: 960px;
-            margin: 30px auto;
-            padding: 32px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
-
-        .cabecalho-pagina {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .titulo-pagina {
-            font-size: 24px;
-            font-weight: 800;
-            color: #0d1b2a;
-            margin: 0;
-        }
-
-        .tag-auto-ordem {
-            background: #edf2f7;
-            color: #4a5568;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid #cbd5e0;
-        }
-
-        /* BARRA DE PESQUISA POR NOME */
-        .caixa-pesquisa {
-            margin-bottom: 20px;
-        }
-
-        .campo-pesquisa {
-            width: 100%;
-            padding: 12px 16px;
-            font-size: 16px;
-            border: 2px solid #cbd5e0;
-            border-radius: 10px;
-            outline: none;
-            box-sizing: border-box;
-            transition: border-color 0.2s ease;
-        }
-
-        .campo-pesquisa:focus {
-            border-color: #0056b3;
-        }
-
-        /* FILTROS POR TIPO */
-        .filtro-tipo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-            background: #f8fafc;
-            padding: 12px 16px;
-            border-radius: 10px;
-            border: 1px solid #edf2f7;
-            flex-wrap: wrap;
-        }
-
-        .filtro-label {
-            font-size: 14px;
-            font-weight: 700;
-            color: #4a5568;
-        }
-
-        .botoes-filtro-tipo {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .btn-filtro-tipo {
-            padding: 8px 16px;
-            border: 1px solid #cbd5e0;
-            background: white;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-filtro-tipo.ativo {
-            background: #0056b3;
-            color: white;
-            border-color: #0056b3;
-        }
-
-        /* LISTAGEM DE CARDS DE CONSULTA */
         .card-consulta {
-            border: 1px solid #e2e8f0;
-            border-left-width: 8px;
+            background: #ffffff;
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 16px;
-            background: #f8fafc;
-            transition: box-shadow 0.2s ease;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border-left: 6px solid #ccc;
+            transition: transform 0.2s;
         }
 
         .card-consulta:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
         }
 
-        .card-consulta.p-3 { border-left-color: #e53e3e; } /* Urgente */
-        .card-consulta.p-2 { border-left-color: #d69e2e; } /* Média Urgência */
-        .card-consulta.p-1 { border-left-color: #38a169; } /* Pouca Urgência */
+        /* NÍVEIS DE URGÊNCIA */
+        .p-4 { border-left-color: #991b1b; background-color: #fff5f5; } /* Emergência Grave (Topo) */
+        .p-3 { border-left-color: #dc3545; }
+        .p-2 { border-left-color: #ffc107; }
+        .p-1 { border-left-color: #28a745; }
 
         .consulta-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 8px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
         }
 
         .consulta-paciente {
-            font-weight: 700;
-            font-size: 18px;
-            color: #1a202c;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .consulta-badges {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .consulta-tag {
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .tag-3 { background: #fed7d7; color: #9b2c2c; }
-        .tag-2 { background: #fefcbf; color: #975a16; }
-        .tag-1 { background: #c6f6d5; color: #22543d; }
+        .tag-4 { background-color: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+        .tag-3 { background-color: #fde8e8; color: #dc3545; }
+        .tag-2 { background-color: #fff8e1; color: #b78103; }
+        .tag-1 { background-color: #e8f5e9; color: #28a745; }
+
+        .tag-simbolo-prioridade {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
 
         .consulta-detalhe {
-            margin-bottom: 8px;
-            font-size: 15px;
+            margin: 6px 0;
             color: #4a5568;
-        }
-
-        .consulta-detalhe strong {
-            color: #2d3748;
+            font-size: 0.95rem;
         }
 
         .consulta-acoes {
             display: flex;
-            justify-content: space-between;
-            margin-top: 16px;
-            padding-top: 12px;
-            border-top: 1px solid #edf2f7;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+        }
+
+        .btn-ouvir-card, .btn-cancelar-card {
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
         }
 
         .btn-ouvir-card {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: none;
-            background: #ebf8ff;
-            color: #2b6cb0;
-            font-weight: 700;
-            cursor: pointer;
+            background-color: #eef2ff;
+            color: #4f46e5;
         }
 
         .btn-cancelar-card {
-            padding: 8px 16px;
+            background-color: #fef2f2;
+            color: #dc2626;
+            margin-left: auto;
+        }
+
+        .campo-pesquisa-busca {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
             border-radius: 8px;
-            border: none;
-            background: #fff5f5;
-            color: #e53e3e;
-            font-weight: 700;
-            cursor: pointer;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .campo-pesquisa-busca:focus {
+            border-color: #0056b3;
         }
 
         .mensagem-vazia {
             text-align: center;
-            color: #718096;
             padding: 40px 20px;
-            font-size: 16px;
+            color: #718096;
+            font-size: 1.05rem;
+        }
+
+        /* --- ESTILOS DO MODAL PERSONALIZADO --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.ativo {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-caixa {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.ativo .modal-caixa {
+            transform: scale(1);
+        }
+
+        .modal-icone {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-titulo {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .modal-texto {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .modal-botoes {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-modal {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .btn-modal-cancelar {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-modal-confirmar {
+            background: #dc2626;
+            color: #ffffff;
+        }
+
+        /* BANNER DE NOTIFICAÇÃO FLUTUANTE (TOAST) */
+        .toast-notificacao {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-weight: bold;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1100;
+        }
+
+        .toast-notificacao.visivel {
+            transform: translateY(0);
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
-    <!-- BARRA SUPERIOR DE NAVEGAÇÃO -->
     <header class="aws-navbar">
         <div class="aws-nav-container">
             <div class="aws-nav-left">
@@ -215,8 +253,8 @@
                 <nav class="aws-nav-links">
                     <a href="index.html">Início</a>
                     <a href="marcar-consulta.html">Marcar Consulta</a>
-                    <a href="medicos.html">Médicos</a>
                     <a href="meus-atendimentos.html" class="ativo">Meus Atendimentos</a>
+                    <a href="medicos.html">Médicos</a>
                 </nav>
             </div>
             <div class="aws-nav-right">
@@ -225,156 +263,209 @@
         </div>
     </header>
 
-    <!-- CONTAINER PRINCIPAL DA PÁGINA -->
-    <main class="container-principal">
+    <main class="main-container">
 
-        <div class="cabecalho-pagina">
-            <h1 class="titulo-pagina">📋 Meus Atendimentos</h1>
-            <span class="tag-auto-ordem">⚡ Ordenação Automática por Urgência</span>
-        </div>
-
-        <!-- PESQUISA POR NOME -->
-        <div class="caixa-pesquisa">
-            <input type="text" id="campo-pesquisa-nome" class="campo-pesquisa" placeholder="🔍 Pesquisar por nome do paciente ou médico..." oninput="filtrarEExibir()">
-        </div>
-
-        <!-- FILTRO DE TIPO DE CONSULTA -->
-        <div class="filtro-tipo-container">
-            <span class="filtro-label">Exibir tipo:</span>
-            <div class="botoes-filtro-tipo">
-                <button class="btn-filtro-tipo ativo" onclick="selecionarFiltroTipo('TODOS', this)">Todas</button>
-                <button class="btn-filtro-tipo" onclick="selecionarFiltroTipo('DENTISTA', this)">🦷 Dentista</button>
-                <button class="btn-filtro-tipo" onclick="selecionarFiltroTipo('CHECAPE', this)">🩺 Checape</button>
-                <button class="btn-filtro-tipo" onclick="selecionarFiltroTipo('VACINA', this)">💉 Vacina</button>
+        <div class="painel-consultas" style="max-width: 900px; margin: 30px auto; padding: 20px;">
+            <div class="consultas-header-box" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>📋 Meus Atendimentos</h2>
+                <span class="tag-auto-ordem" style="background: #fff3cd; color: #856404; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold;">⚡ Ordenação Automática por Urgência</span>
             </div>
-        </div>
 
-        <!-- LISTA DINÂMICA DE ATENDIMENTOS -->
-        <div id="container-atendimentos">
-            <p class="mensagem-vazia">A carregar atendimentos...</p>
+            <input type="text" id="campo-busca" class="campo-pesquisa-busca" placeholder="🔍 Pesquisar por nome do paciente..." oninput="renderizarConsultas()">
+
+            <div class="filtro-tipo-container" style="margin-bottom: 20px;">
+                <span class="filtro-label" style="font-weight: bold; margin-right: 10px;">Exibir tipo:</span>
+                <div class="botoes-filtro-tipo" style="display: inline-flex; gap: 8px;">
+                    <button class="btn-filtro-tipo ativo" onclick="filtrarPorTipo('TODOS', this)">Todas</button>
+                    <button class="btn-filtro-tipo" onclick="filtrarPorTipo('DENTISTA', this)">🦷 Dentista</button>
+                    <button class="btn-filtro-tipo" onclick="filtrarPorTipo('CHECAPE', this)">🩺 Checape</button>
+                    <button class="btn-filtro-tipo" onclick="filtrarPorTipo('VACINA', this)">💉 Vacina</button>
+                </div>
+            </div>
+
+            <div id="container-consultas" class="grid-consultas">
+                <p class="mensagem-vazia">A carregar atendimentos...</p>
+            </div>
         </div>
 
     </main>
 
-    <!-- LÓGICA EM JAVASCRIPT -->
-    <script>
-        // Dados de exemplo de atendimentos
-        let consultas = [
-            {
-                id: 101,
-                nome: 'Joao',
-                idade: 15,
-                tipo: 'CHECAPE',
-                medico: 'Dr. Carlos Souza',
-                motivo: 'Febre, vomito e pancada na cabeça',
-                alergia: 'Nenhuma',
-                temperatura: '37.8',
-                urgencia: 3,
-                dataHora: '18/09/2026, 16:38:02'
-            },
-            {
-                id: 102,
-                nome: 'pedro',
-                idade: 10,
-                tipo: 'DENTISTA',
-                medico: 'Dr. Roberto Lima',
-                motivo: 'Aparelho ortodôntico',
-                alergia: 'Nenhuma',
-                temperatura: '',
-                urgencia: 1,
-                dataHora: '18/09/2026, 16:38:41'
-            },
-            {
-                id: 103,
-                nome: 'Mariana Silva',
-                idade: 28,
-                tipo: 'VACINA',
-                medico: 'Enfª. Amanda Oliveira',
-                motivo: 'Aplicação de Vacina: Covid-19',
-                alergia: 'Nenhuma',
-                temperatura: '',
-                urgencia: 1,
-                dataHora: '18/09/2026, 17:05:10'
-            }
-        ];
+    <!-- MODAL DE CONFIRMAÇÃO DE CANCELAMENTO -->
+    <div id="modal-confirmacao" class="modal-overlay">
+        <div class="modal-caixa">
+            <div class="modal-icone">🗑️</div>
+            <div class="modal-titulo">Cancelar Atendimento</div>
+            <div class="modal-texto">Tem a certeza de que deseja cancelar este agendamento? Esta ação não pode ser desfeita.</div>
+            <div class="modal-botoes">
+                <button class="btn-modal btn-modal-cancelar" onclick="fecharModal()">Voltar</button>
+                <button class="btn-modal btn-modal-confirmar" id="btn-confirmar-cancelamento">Sim, Cancelar</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- TOAST DE NOTIFICAÇÃO -->
+    <div id="toast" class="toast-notificacao">Atendimento cancelado com sucesso!</div>
+
+    <script>
+        let consultas = [];
         let tipoFiltroAtual = 'TODOS';
+        let idParaCancelar = null;
 
         window.onload = function() {
-            filtrarEExibir();
+            carregarConsultasDoStorage();
+            renderizarConsultas();
         };
 
-        function selecionarFiltroTipo(tipo, el) {
-            document.querySelectorAll('.btn-filtro-tipo').forEach(b => b.classList.remove('ativo'));
-            el.classList.add('ativo');
-            tipoFiltroAtual = tipo;
-            filtrarEExibir();
+        function carregarConsultasDoStorage() {
+            try {
+                const salvas = localStorage.getItem('susi_consultas');
+                consultas = salvas ? JSON.parse(salvas) : [];
+            } catch (e) {
+                consultas = [];
+            }
         }
 
-        function filtrarEExibir() {
-            const container = document.getElementById('container-atendimentos');
-            const termoPesquisa = document.getElementById('campo-pesquisa-nome').value.toLowerCase().trim();
+        function guardarNoStorage() {
+            localStorage.setItem('susi_consultas', JSON.stringify(consultas));
+        }
 
-            // 1. Ordenação Automática por Urgência (Mais urgentes primeiro)
-            consultas.sort((a, b) => {
-                if (b.urgencia !== a.urgencia) {
-                    return b.urgencia - a.urgencia;
-                }
-                return b.id - a.id;
+        function filtrarPorTipo(tipo, el) {
+            document.querySelectorAll('.btn-filtro-tipo').forEach(b => b.classList.remove('ativo'));
+            if (el) el.classList.add('ativo');
+            tipoFiltroAtual = tipo;
+            renderizarConsultas();
+        }
+
+        // Função de Avaliação e Priorização
+        function calcularPrioridade(item) {
+            const motivo = (item.motivo || '').toLowerCase();
+
+            // Lista abrangente de emergências críticas
+            const termosEmergencia = [
+                'infarto', 'avc', 'derrame', 'parada', 'parada cardíaca', 'parada cardiaca', 
+                'dor no peito', 'infartou', 'isquemia', 'cardíaco', 'cardiaco',
+                'esfaqueado', 'esfaqueada', 'facada', 'esfaqueamento', 'perfuração', 'perfuracao', 'corte profundo',
+                'atropelamento', 'atropelado', 'atropelada', 'tiro', 'baleado', 'baleada', 'arma de fogo',
+                'pancada forte', 'traumatismo', 'trauma', 'hemorragia', 'sangramento forte',
+                'pescoço', 'pescoca', 'tórax', 'torax', 'peito', 'abdômen', 'abdomen', 'barriga', 'cabeça', 'cabeca'
+            ];
+
+            // Se o motivo contiver qualquer um dos termos críticos -> Nível 4 (Emergência Extrema / Topo da Lista)
+            if (termosEmergencia.some(termo => motivo.includes(termo))) {
+                return 4;
+            }
+
+            return Number(item.urgencia) || 1;
+        }
+
+        function renderizarConsultas() {
+            const container = document.getElementById('container-consultas');
+            if (!container) return;
+
+            const termoBusca = document.getElementById('campo-busca') ? document.getElementById('campo-busca').value.toLowerCase().trim() : '';
+
+            // Processa prioridade dinâmica
+            consultas.forEach(item => {
+                item.nivelCalculado = calcularPrioridade(item);
             });
 
-            // 2. Filtro por Tipo (Dentista, Checape, Vacina)
-            let resultado = consultas;
-            if (tipoFiltroAtual !== 'TODOS') {
-                resultado = resultado.filter(c => c.tipo === tipoFiltroAtual);
-            }
+            // Ordena colocando a urgência máxima no topo (4 > 3 > 2 > 1)
+            consultas.sort((a, b) => {
+                if (b.nivelCalculado !== a.nivelCalculado) {
+                    return b.nivelCalculado - a.nivelCalculado;
+                }
+                return (b.id || 0) - (a.id || 0);
+            });
 
-            // 3. Filtro por Nome do Paciente ou Médico
-            if (termoPesquisa !== '') {
-                resultado = resultado.filter(c => 
-                    c.nome.toLowerCase().includes(termoPesquisa) || 
-                    c.medico.toLowerCase().includes(termoPesquisa)
-                );
-            }
+            let consultasFiltradas = consultas.filter(item => {
+                const atendeTipo = (tipoFiltroAtual === 'TODOS') || (item.tipo === tipoFiltroAtual);
+                const atendeNome = !termoBusca || (item.nome && item.nome.toLowerCase().includes(termoBusca));
+                return atendeTipo && atendeNome;
+            });
 
-            // Exibição do estado vazio
-            if (resultado.length === 0) {
-                container.innerHTML = '<p class="mensagem-vazia">Nenhum atendimento encontrado para os critérios pesquisados.</p>';
+            if (consultasFiltradas.length === 0) {
+                container.innerHTML = '<p class="mensagem-vazia">Nenhum atendimento agendado encontrado.</p>';
                 return;
             }
 
-            // Renderização dos cards
             container.innerHTML = '';
-            resultado.forEach(item => {
-                let tagTexto = item.urgencia === 3 ? '🚨 Urgente' : (item.urgencia === 2 ? '⚠️ Média Urgência' : '🟢 Pouca Urgência');
-                let classeBorda = item.urgencia === 3 ? 'p-3' : (item.urgencia === 2 ? 'p-2' : 'p-1');
+            consultasFiltradas.forEach(item => {
+                const urg = item.nivelCalculado;
+                
+                let tagUrgencia = '🟢 Pouca Urgência';
+                let classeBorder = 'p-1';
+
+                if (urg === 4) {
+                    tagUrgencia = '🚨 EMERGÊNCIA GRAVE';
+                    classeBorder = 'p-4';
+                } else if (urg === 3) {
+                    tagUrgencia = '🚨 Urgente';
+                    classeBorder = 'p-3';
+                } else if (urg === 2) {
+                    tagUrgencia = '⚠️ Média Urgência';
+                    classeBorder = 'p-2';
+                }
+
+                // Identifica se há símbolos de prioridade legal/assistencial ou emergência
+                let simboloPrioridade = item.simbolo || item.simboloPrioridade || '';
+                if (!simboloPrioridade && urg === 4) {
+                    simboloPrioridade = '🚨';
+                } else if (!simboloPrioridade && (item.prioridadeEspecial || item.idade >= 60)) {
+                    simboloPrioridade = '♿';
+                }
 
                 const card = document.createElement('div');
-                card.className = `card-consulta ${classeBorda}`;
+                card.className = `card-consulta ${classeBorder}`;
                 card.innerHTML = `
                     <div class="consulta-header">
-                        <span class="consulta-paciente">👤 ${item.nome} (${item.idade} anos)</span>
-                        <span class="consulta-tag tag-${item.urgencia}">${tagTexto}</span>
+                        <span class="consulta-paciente">👤 ${item.nome || 'Paciente sem nome'} ${item.idade ? '(' + item.idade + ' anos)' : ''}</span>
+                        <div class="consulta-badges">
+                            ${simboloPrioridade ? `<span class="tag-simbolo-prioridade">${simboloPrioridade}</span>` : ''}
+                            <span class="consulta-tag tag-${urg}">${tagUrgencia}</span>
+                        </div>
                     </div>
-                    <div class="consulta-detalhe">🩺 <strong>Atendimento:</strong> ${item.tipo} com ${item.medico}</div>
-                    <div class="consulta-detalhe">📝 <strong>Motivo/Detalhes:</strong> ${item.motivo}</div>
+                    <div class="consulta-detalhe">🩺 <strong>Atendimento:</strong> ${item.tipo || 'N/A'} com ${item.medico || 'Profissional não especificado'}</div>
+                    <div class="consulta-detalhe">📝 <strong>Motivo/Detalhes:</strong> ${item.motivo || 'Sem observações'}</div>
                     ${item.alergia && item.alergia !== 'Nenhuma' ? `<div class="consulta-detalhe">⚠️ <strong>Alergia/Comorbidade:</strong> ${item.alergia}</div>` : ''}
                     ${item.temperatura ? `<div class="consulta-detalhe">🌡️ <strong>Temperatura:</strong> ${item.temperatura} °C</div>` : ''}
-                    <div class="consulta-detalhe">🕒 <strong>Data/Hora:</strong> ${item.dataHora}</div>
+                    <div class="consulta-detalhe">🕒 <strong>Data/Hora do Agendamento:</strong> ${item.dataHora || 'Data não registrada'}</div>
                     <div class="consulta-acoes">
-                        <button class="btn-ouvir-card" onclick="falarTexto('Paciente ${item.nome}, consulta de ${item.tipo} com ${item.medico}.')">🔊 Ouvir</button>
-                        <button class="btn-cancelar-card" onclick="cancelarConsulta(${item.id})">❌ Cancelar Agendamento</button>
+                        <button class="btn-ouvir-card" onclick="falarTexto('Paciente ${item.nome || ''}, consulta de ${item.tipo || ''} com ${item.medico || ''}. Motivo: ${item.motivo || ''}')">🔊 Ouvir</button>
+                        <button class="btn-cancelar-card" onclick="abrirModalCancelar(${item.id})">❌ Cancelar</button>
                     </div>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function cancelarConsulta(id) {
-            if (confirm("Deseja realmente cancelar este atendimento?")) {
-                consultas = consultas.filter(c => c.id !== id);
-                filtrarEExibir();
+        /* LÓGICA DO MODAL */
+        function abrirModalCancelar(id) {
+            idParaCancelar = id;
+            document.getElementById('modal-confirmacao').classList.add('ativo');
+        }
+
+        function fecharModal() {
+            idParaCancelar = null;
+            document.getElementById('modal-confirmacao').classList.remove('ativo');
+        }
+
+        document.getElementById('btn-confirmar-cancelamento').onclick = function() {
+            if (idParaCancelar !== null) {
+                consultas = consultas.filter(c => c.id !== idParaCancelar);
+                guardarNoStorage();
+                renderizarConsultas();
+                fecharModal();
+                exibirToast("Atendimento cancelado com sucesso!");
             }
+        };
+
+        function exibirToast(mensagem) {
+            const toast = document.getElementById('toast');
+            toast.innerText = mensagem;
+            toast.classList.add('visivel');
+            setTimeout(() => {
+                toast.classList.remove('visivel');
+            }, 3000);
         }
 
         function falarTexto(texto) {

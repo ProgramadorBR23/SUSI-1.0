@@ -5,10 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marcar Consulta - SUSi!</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS do formulário de marcar consulta */
+        .main-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .aviso-ilustrativo {
+            background-color: #fef3c7;
+            border: 1px solid #fde68a;
+            color: #92400e;
+            padding: 15px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .card-passos {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .progresso-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .barra-progresso-fundo {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .barra-progresso-preenchimento {
+            background: #0088cc;
+            height: 100%;
+            width: 20%;
+            transition: width 0.3s ease;
+        }
+
+        .caixa-pergunta {
+            background: #f0f9ff;
+            border-left: 4px solid #0088cc;
+            padding: 15px 20px;
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .caixa-pergunta h3 {
+            margin: 0;
+            color: #0369a1;
+            font-size: 1.15rem;
+        }
+
+        .btn-ouvir {
+            background: #e0f2fe;
+            border: none;
+            color: #0369a1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .campo-entrada {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            margin-bottom: 25px;
+        }
+
+        .campo-entrada:focus {
+            border-color: #0088cc;
+        }
+
+        .btn-avancar {
+            width: 100%;
+            background: #0088cc;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-avancar:hover {
+            background: #0077b5;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- BARRA SUPERIOR DE NAVEGAÇÃO -->
+    <!-- CABEÇALHO PADRONIZADO -->
     <header class="aws-navbar">
         <div class="aws-nav-container">
             <div class="aws-nav-left">
@@ -18,8 +134,8 @@
                 <nav class="aws-nav-links">
                     <a href="index.html">Início</a>
                     <a href="marcar-consulta.html" class="ativo">Marcar Consulta</a>
+                    <a href="meus-atendimentos.html">Meus Atendimentos</a>
                     <a href="medicos.html">Médicos</a>
-                    <a href="central-atendimento.html">Ajuda</a>
                 </nav>
             </div>
             <div class="aws-nav-right">
@@ -30,644 +146,33 @@
 
     <main class="main-container">
 
-        <!-- BANNER DE AVISO ILUSTRATIVO -->
-        <div class="alerta-ilustrativo">
-            <span class="icone-alerta">⚠️</span>
-            <div class="texto-alerta">
-                <strong>Aviso Importante:</strong> As informações e médicos apresentados são meramente ilustrativos.
-            </div>
+        <div class="aviso-ilustrativo">
+            <span>⚠️</span>
+            <div><strong>Aviso Importante:</strong> As informações e médicos apresentados são meramente ilustrativos.</div>
         </div>
 
-        <!-- PAINEL DE AGENDAMENTO (PASSO A PASSO) -->
-        <div class="painel-agendamento">
-            
-            <!-- BARRA DE PROGRESSO DINÂMICA -->
-            <div class="progresso-wrapper">
-                <div class="progresso-info">
-                    <span id="texto-passo">Passo 1 de 5</span>
-                    <span id="texto-porcentagem">20% Concluído</span>
-                </div>
-                <div class="progresso-barra-bg">
-                    <div id="progresso-barra-fill" class="progresso-barra-fill" style="width: 20%;"></div>
-                </div>
+        <div class="card-passos">
+            <div class="progresso-header">
+                <span>Passo 1 de 5</span>
+                <span>20% Concluído</span>
+            </div>
+            <div class="barra-progresso-fundo">
+                <div class="barra-progresso-preenchimento"></div>
             </div>
 
-            <!-- ETAPA 1: NOME -->
-            <div class="etapa ativa" id="etapa-1">
-                <div class="etapa-header">
-                    <span class="etapa-titulo">1. Quem é o paciente?</span>
-                    <button type="button" class="btn-audio" onclick="falarTexto('1. Quem é o paciente? Digite o nome no campo abaixo.')">🔊 Ouvir</button>
-                </div>
-                <input type="text" id="nome-paciente" class="campo-grande" placeholder="Digite o Nome Completo Aqui...">
-                <div class="botoes-passo">
-                    <button type="button" class="btn-passo btn-proximo" onclick="proximoPasso(2)">Avançar &rarr;</button>
-                </div>
+            <div class="caixa-pergunta">
+                <h3>1. Quem é o paciente?</h3>
+                <button class="btn-ouvir" onclick="falarTexto('Quem é o paciente?')">🔊 Ouvir</button>
             </div>
 
-            <!-- ETAPA 2: IDADE -->
-            <div class="etapa" id="etapa-2">
-                <div class="etapa-header">
-                    <span class="etapa-titulo">2. Qual a idade do paciente?</span>
-                    <button type="button" class="btn-audio" onclick="falarTexto('2. Qual a idade do paciente?')">🔊 Ouvir</button>
-                </div>
-                <input type="number" id="idade-paciente" class="campo-grande" placeholder="Digite a Idade (ex: 28)" min="0" max="120">
-                <div class="botoes-passo">
-                    <button type="button" class="btn-passo btn-voltar" onclick="passoAnterior(1)">&larr; Voltar</button>
-                    <button type="button" class="btn-passo btn-proximo" onclick="proximoPasso(3)">Avançar &rarr;</button>
-                </div>
-            </div>
+            <input type="text" class="campo-entrada" placeholder="Digite o Nome Completo Aqui...">
 
-            <!-- ETAPA 3: TIPO DE CONSULTA -->
-            <div class="etapa" id="etapa-3">
-                <div class="etapa-header">
-                    <span class="etapa-titulo">3. Qual tipo de consulta deseja?</span>
-                    <button type="button" class="btn-audio" onclick="falarTexto('3. Selecione o tipo de consulta: Dentista, Checape ou Vacina.')">🔊 Ouvir</button>
-                </div>
-
-                <div class="grid-opcoes">
-                    <div class="card-opcao" onclick="selecionarTipo('dentista', this)">
-                        <span class="icone">🦷</span>
-                        <span class="texto">Dentista</span>
-                    </div>
-                    <div class="card-opcao" onclick="selecionarTipo('checape', this)">
-                        <span class="icone">🩺</span>
-                        <span class="texto">Checape</span>
-                    </div>
-                    <div class="card-opcao" onclick="selecionarTipo('vacina', this)">
-                        <span class="icone">💉</span>
-                        <span class="texto">Vacina</span>
-                    </div>
-                </div>
-
-                <div class="botoes-passo">
-                    <button type="button" class="btn-passo btn-voltar" onclick="passoAnterior(2)">&larr; Voltar</button>
-                    <button type="button" class="btn-passo btn-proximo" onclick="avancarEtapa3()">Avançar &rarr;</button>
-                </div>
-            </div>
-
-            <!-- ETAPA 4-A: MOTIVO CHECAPE -->
-            <div class="etapa" id="etapa-4-checape">
-                <div class="etapa-header">
-                    <span class="etapa-titulo">4. Motivo e Sintomas da Consulta</span>
-                    <button type="button" class="btn-audio" onclick="falarTexto('4. Descreva o motivo da consulta ou os sintomas que está sentindo.')">🔊 Ouvir</button>
-                </div>
-
-                <div class="campo-grupo">
-                    <label class="label-data">Descreva o motivo / sintomas:</label>
-                    <textarea id="motivo-checape" class="campo-textarea" placeholder="Ex: Dores de cabeça e febre desde ontem..." oninput="verificarFebre()"></textarea>
-                </div>
-
-                <div id="box-febre" class="box-febre-oculto">
-                    <div class="alerta-febre-header">
-                        🔥 <strong>Foi detectada 'febre' no seu relato!</strong> Informe a temperatura estimada:
-                    </div>
-                    <label class="label-data">Temperatura Corporal (°C):</label>
-                    <input type="number" id="temperatura-paciente" class="campo-grande" placeholder="Ex: 38.5" step="0.1" min="35" max="43">
-                </div>
-
-                <div class="botoes-passo">
-                    <button type="button" class="btn-passo btn-voltar" onclick="passoAnterior(3)">&larr; Voltar</button>
-                    <button type="button" class="btn-passo btn-proximo" onclick="avancarParaMedicos()">Avançar &rarr;</button>
-                </div>
-            </div>
-
-            <!-- ETAPA 4-B: MOTIVO DENTISTA -->
-            <div class="etapa" id="etapa-4-dentista">
-                <div class="etapa-header">
-                    <span class="etapa-titulo">4. Qual o motivo da consulta odontológica?</span>
-                    <button type="button" class="btn-audio" onclick="falarTexto('4. Selecione o motivo da consulta: Checagem de rotina, Aparelho ortodôntico ou Tratamento dental.')">🔊 Ouvir</button>
-                </div>
-
-                <div class="grid-opcoes">
-                    <div class="card-opcao" onclick="selecionarMotivoDentista('Checagem de rotina', this)">
-                        <span class="icone">🔍</span>
-                        <span class="texto">Checagem de rotina</span>
-                    </div>
-                    <div class="card-opcao" onclick="selecionarMotivoDentista('Aparelho ortodôntico', this)">
-                        <span class="icone">🦷</span>
-                        <span class="texto">Aparelho ortodôntico</span>
-                    </div>
-                    <div class="card-opcao" onclick="selecionarMotivoDentista('Tratamento dental / Outros', this)">
-                        <span class="icone">🛠️</span>
-                        <span class="texto">Tratamento / Outros</span>
-                    </div>
-                </div>
-
-                <div class="botoes-passo">
-                    <button type="button" class="btn-passo btn-voltar" onclick="passoAnterior(3)">&larr; Voltar</button>
-                    <button type="button" class="btn-passo btn-proximo" onclick="avancarParaMedicos()">Avançar &rarr;</button>
-                </div>
-            </div>
-
-            <!-- ETAPA 4-C: ALERGIAS E COMORBIDADES (VACINA) -->
-            <div class="etapa" id="etapa-4-vacina-alergia">
-                <div class="etapa-header">
-                    <span class="etapa-titulo">4. Possui alguma alergia ou comorbidade?</span>
-                    <button type="button" class="btn-audio" onclick="falarTexto('4. Informe se possui alguma alergia ou comorbidade.')">🔊 Ouvir</button>
-                </div>
-
-                <div class="grid-opcoes-duas">
-                    <div class="card-opcao" onclick="selecionarAlergia(false, this)">
-                        <span class="icone">✅</span>
-                        <span class="texto">Não possui</span>
-                    </div>
-                    <div class="card-opcao" onclick="selecionarAlergia(true, this)">
-                        <span class="icone">⚠️</span>
-                        <span class="texto">Sim, possui</span>
-                    </div>
-                </div>
-
-                <div id="box-detalhe-alergia" class="box-alergia-oculto">
-                    <label class="label-data">Descreva a alergia ou comorbidade:</label>
-                    <input type="text" id="detalhe-alergia-texto" class="campo-grande" placeholder="Ex: Alergia a ovo, asma, imunossupressão..." oninput="filtrarVacinasDinamicamente()">
-                </div>
-
-                <div class="botoes-passo">
-                    <button type="button" class="btn-passo btn-voltar" onclick="passoAnterior(3)">&larr; Voltar</button>
-                    <button type="button" class="btn-passo btn-proximo" onclick="avancarParaEscolhaVacina()">Avançar &rarr;</button>
-                </div>
-            </div>
-
-            <!-- ETAPA 5-VACINA: OPÇÕES DE VACINAS -->
-            <div class="etapa" id="etapa-5-vacina-opcoes">
-                <div class="etapa-header">
-                    <span class="etapa-titulo">5. Selecione a Vacina Desejada</span>
-                    <button type="button" class="btn-audio" onclick="falarTexto('5. Escolha a vacina desejada na lista abaixo.')">🔊 Ouvir</button>
-                </div>
-
-                <div id="alerta-filtro-vacina" class="alerta-filtro-oculto">
-                    🛡️ <strong>Atenção para sua segurança:</strong> Algumas vacinas foram ocultadas devido às alergias/comorbidades informadas.
-                </div>
-
-                <div class="grid-opcoes" id="container-vacinas-dinamicas">
-                    <div class="card-opcao vacina-item" data-vacina="Gripe (Influenza)" data-contraindicacao="ovo,galinha" onclick="selecionarVacina('Gripe (Influenza)', this)">
-                        <span class="icone">💉</span>
-                        <span class="texto">Gripe (Influenza)</span>
-                    </div>
-                    <div class="card-opcao vacina-item" data-vacina="Covid-19" data-contraindicacao="" onclick="selecionarVacina('Covid-19', this)">
-                        <span class="icone">🛡️</span>
-                        <span class="texto">Covid-19</span>
-                    </div>
-                    <div class="card-opcao vacina-item" data-vacina="Tétano (dT)" data-contraindicacao="" onclick="selecionarVacina('Tétano (dT)', this)">
-                        <span class="icone">🩹</span>
-                        <span class="texto">Tétano (dT)</span>
-                    </div>
-                    <div class="card-opcao vacina-item" data-vacina="Hepatite B" data-contraindicacao="" onclick="selecionarVacina('Hepatite B', this)">
-                        <span class="icone">🧪</span>
-                        <span class="texto">Hepatite B</span>
-                    </div>
-                    <div class="card-opcao vacina-item" data-vacina="Febre Amarela" data-contraindicacao="ovo,galinha,imunossupressao,imunossupressão,cancer,câncer,imunidade baixa" onclick="selecionarVacina('Febre Amarela', this)">
-                        <span class="icone">🦟</span>
-                        <span class="texto">Febre Amarela</span>
-                    </div>
-                </div>
-
-                <div class="botoes-passo">
-                    <button type="button" class="btn-passo btn-voltar" onclick="passoAnterior('4-c')">&larr; Voltar</button>
-                    <button type="button" class="btn-passo btn-proximo" onclick="avancarParaMedicos()">Avançar &rarr;</button>
-                </div>
-            </div>
-
-            <!-- ETAPA MÉDICOS / PROFISSIONAIS DE SAÚDE -->
-            <div class="etapa" id="etapa-medicos">
-                <div class="etapa-header">
-                    <span class="etapa-titulo" id="titulo-medicos">Selecione o Profissional</span>
-                    <button type="button" class="btn-audio" onclick="falarTexto('Selecione o profissional de saúde disponível.')">🔊 Ouvir</button>
-                </div>
-
-                <div id="lista-medicos" class="lista-medicos-container">
-                    <!-- Gerado dinamicamente -->
-                </div>
-
-                <div class="botoes-passo">
-                    <button type="button" id="btn-voltar-medicos" class="btn-passo btn-voltar">&larr; Voltar</button>
-                    <button type="button" class="btn-passo btn-confirmar" onclick="finalizarAgendamento()">Confirmar Agendamento ✓</button>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- PAINEL DE CONSULTAS AGENDADAS -->
-        <div class="painel-consultas">
-            <div class="consultas-header-box">
-                <h2>📋 Consultas Agendadas</h2>
-                <span class="tag-auto-ordem">⚡ Ordenação Automática por Urgência</span>
-            </div>
-
-            <!-- FILTRO EXCLUSIVO POR TIPO DE CONSULTA -->
-            <div class="filtro-tipo-container">
-                <span class="filtro-label">Exibir tipo:</span>
-                <div class="botoes-filtro-tipo">
-                    <button class="btn-filtro-tipo ativo" onclick="filtrarPorTipo('TODOS', this)">Todas</button>
-                    <button class="btn-filtro-tipo" onclick="filtrarPorTipo('DENTISTA', this)">🦷 Dentista</button>
-                    <button class="btn-filtro-tipo" onclick="filtrarPorTipo('CHECAPE', this)">🩺 Checape</button>
-                    <button class="btn-filtro-tipo" onclick="filtrarPorTipo('VACINA', this)">💉 Vacina</button>
-                </div>
-            </div>
-
-            <div id="container-consultas">
-                <p class="mensagem-vazia">Nenhuma consulta agendada no momento.</p>
-            </div>
+            <button class="btn-avancar">Avançar →</button>
         </div>
 
     </main>
 
-    <!-- SCRIPTS DE LÓGICA E FLUXO -->
     <script>
-        let agendamento = {
-            nome: '',
-            idade: '',
-            tipo: '',
-            motivo: '',
-            temAlergia: false,
-            alergiaTexto: '',
-            vacinaEscolhida: '',
-            temperatura: '',
-            medico: ''
-        };
-
-        // Dados iniciais de exemplo para demonstração
-        let consultas = [
-            {
-                id: 101,
-                nome: 'Joao',
-                idade: 15,
-                tipo: 'CHECAPE',
-                medico: 'Dr. Carlos Souza',
-                motivo: 'Febre, vomito e pancada na cabeça',
-                alergia: 'Nenhuma',
-                temperatura: '37.8',
-                urgencia: 3,
-                dataHora: '18/09/2026, 16:38:02'
-            },
-            {
-                id: 102,
-                nome: 'pedro',
-                idade: 10,
-                tipo: 'DENTISTA',
-                medico: 'Dr. Roberto Lima',
-                motivo: 'Aparelho ortodôntico',
-                alergia: 'Nenhuma',
-                temperatura: '',
-                urgencia: 1,
-                dataHora: '18/09/2026, 16:38:41'
-            }
-        ];
-
-        let tipoFiltroAtual = 'TODOS';
-
-        const medicosBase = {
-            checape: [
-                { id: 1, nome: 'Dra. Ana Silva', crm: 'CRM 12345-SP', horario: '08:00 - 12:00', foto: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80' },
-                { id: 2, nome: 'Dr. Carlos Souza', crm: 'CRM 67890-SP', horario: '13:00 - 17:00', foto: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&auto=format&fit=crop&q=80' }
-            ],
-            dentista: [
-                { id: 3, nome: 'Dr. Roberto Lima', crm: 'CRO 4321-SP', horario: '09:00 - 15:00', foto: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&auto=format&fit=crop&q=80' },
-                { id: 4, nome: 'Dra. Camila Nogueira', crm: 'CRO 9876-SP', horario: '14:00 - 18:00', foto: 'https://images.unsplash.com/photo-1594824813572-c208c105572f?w=150&auto=format&fit=crop&q=80' }
-            ],
-            vacina: [
-                { id: 5, nome: 'Enfª. Amanda Oliveira', crm: 'COREN 5543-SP', horario: '07:00 - 18:00', foto: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80' },
-                { id: 6, nome: 'Dr. Fernando Dias', crm: 'CRM 88771-SP', horario: '08:00 - 16:00', foto: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=150&auto=format&fit=crop&q=80' }
-            ]
-        };
-
-        window.onload = function() {
-            renderizarConsultas();
-        };
-
-        function atualizarBarraProgresso(passoAtual, totalPassos) {
-            const pct = Math.round((passoAtual / totalPassos) * 100);
-            document.getElementById('texto-passo').innerText = `Passo ${passoAtual} de ${totalPassos}`;
-            document.getElementById('texto-porcentagem').innerText = `${pct}% Concluído`;
-            document.getElementById('progresso-barra-fill').style.width = `${pct}%`;
-        }
-
-        function esconderTodasEtapas() {
-            document.querySelectorAll('.etapa').forEach(el => el.classList.remove('ativa'));
-        }
-
-        function proximoPasso(passo) {
-            if (passo === 2 && !document.getElementById('nome-paciente').value.trim()) {
-                alert('Por favor, informe o nome do paciente.');
-                return;
-            }
-            if (passo === 3 && !document.getElementById('idade-paciente').value) {
-                alert('Por favor, informe a idade do paciente.');
-                return;
-            }
-
-            esconderTodasEtapas();
-            document.getElementById(`etapa-${passo}`).classList.add('ativa');
-            atualizarBarraProgresso(passo, agendamento.tipo === 'vacina' ? 6 : 5);
-        }
-
-        function passoAnterior(passo) {
-            esconderTodasEtapas();
-            if (passo === '4-c') {
-                document.getElementById('etapa-4-vacina-alergia').classList.add('ativa');
-                atualizarBarraProgresso(4, 6);
-            } else if (typeof passo === 'number') {
-                document.getElementById(`etapa-${passo}`).classList.add('ativa');
-                atualizarBarraProgresso(passo, agendamento.tipo === 'vacina' ? 6 : 5);
-            }
-        }
-
-        function selecionarTipo(tipo, elemento) {
-            document.querySelectorAll('#etapa-3 .card-opcao').forEach(el => el.classList.remove('selecionado'));
-            elemento.classList.add('selecionado');
-            agendamento.tipo = tipo;
-        }
-
-        function avancarEtapa3() {
-            if (!agendamento.tipo) {
-                alert('Por favor, escolha um tipo de consulta.');
-                return;
-            }
-
-            esconderTodasEtapas();
-            if (agendamento.tipo === 'checape') {
-                document.getElementById('etapa-4-checape').classList.add('ativa');
-                atualizarBarraProgresso(4, 5);
-            } else if (agendamento.tipo === 'dentista') {
-                document.getElementById('etapa-4-dentista').classList.add('ativa');
-                atualizarBarraProgresso(4, 5);
-            } else if (agendamento.tipo === 'vacina') {
-                document.getElementById('etapa-4-vacina-alergia').classList.add('ativa');
-                atualizarBarraProgresso(4, 6);
-            }
-        }
-
-        function verificarFebre() {
-            const texto = document.getElementById('motivo-checape').value.toLowerCase();
-            const box = document.getElementById('box-febre');
-            if (texto.includes('febre')) {
-                box.className = 'box-febre-visivel';
-            } else {
-                box.className = 'box-febre-oculto';
-                document.getElementById('temperatura-paciente').value = '';
-            }
-        }
-
-        function selecionarMotivoDentista(motivo, el) {
-            document.querySelectorAll('#etapa-4-dentista .card-opcao').forEach(c => c.classList.remove('selecionado'));
-            el.classList.add('selecionado');
-            agendamento.motivo = motivo;
-        }
-
-        function selecionarAlergia(possui, el) {
-            document.querySelectorAll('#etapa-4-vacina-alergia .card-opcao').forEach(c => c.classList.remove('selecionado'));
-            el.classList.add('selecionado');
-            agendamento.temAlergia = possui;
-
-            const box = document.getElementById('box-detalhe-alergia');
-            if (possui) {
-                box.className = 'box-alergia-visivel';
-            } else {
-                box.className = 'box-alergia-oculto';
-                document.getElementById('detalhe-alergia-texto').value = '';
-                agendamento.alergiaTexto = '';
-                filtrarVacinasDinamicamente();
-            }
-        }
-
-        function filtrarVacinasDinamicamente() {
-            const texto = document.getElementById('detalhe-alergia-texto').value.toLowerCase().trim();
-            agendamento.alergiaTexto = texto;
-
-            const vacinaCards = document.querySelectorAll('.vacina-item');
-            const alerta = document.getElementById('alerta-filtro-vacina');
-            let ocultouAlguma = false;
-
-            vacinaCards.forEach(card => {
-                const contraindicacoes = card.dataset.contraindicacao ? card.dataset.contraindicacao.split(',') : [];
-                let bloquear = false;
-
-                if (texto && contraindicacoes.length > 0) {
-                    bloquear = contraindicacoes.some(ci => texto.includes(ci));
-                }
-
-                if (bloquear) {
-                    card.style.display = 'none';
-                    card.classList.remove('selecionado');
-                    ocultouAlguma = true;
-                } else {
-                    card.style.display = 'block';
-                }
-            });
-
-            alerta.className = ocultouAlguma ? 'alerta-filtro-visivel' : 'alerta-filtro-oculto';
-        }
-
-        function avancarParaEscolhaVacina() {
-            if (agendamento.temAlergia && !document.getElementById('detalhe-alergia-texto').value.trim()) {
-                alert('Por favor, especifique qual alergia ou comorbidade possui.');
-                return;
-            }
-
-            filtrarVacinasDinamicamente();
-            esconderTodasEtapas();
-            document.getElementById('etapa-5-vacina-opcoes').classList.add('ativa');
-            atualizarBarraProgresso(5, 6);
-        }
-
-        function selecionarVacina(nomeVacina, el) {
-            document.querySelectorAll('#container-vacinas-dinamicas .card-opcao').forEach(c => c.classList.remove('selecionado'));
-            el.classList.add('selecionado');
-            agendamento.vacinaEscolhida = nomeVacina;
-        }
-
-        function avancarParaMedicos() {
-            if (agendamento.tipo === 'checape') {
-                agendamento.motivo = document.getElementById('motivo-checape').value.trim();
-                agendamento.temperatura = document.getElementById('temperatura-paciente').value;
-                if (!agendamento.motivo) {
-                    alert('Por favor, informe o motivo da consulta.');
-                    return;
-                }
-            } else if (agendamento.tipo === 'dentista') {
-                if (!agendamento.motivo) {
-                    alert('Por favor, escolha o motivo da consulta odontológica.');
-                    return;
-                }
-            } else if (agendamento.tipo === 'vacina') {
-                if (!agendamento.vacinaEscolhida) {
-                    alert('Por favor, escolha a vacina desejada.');
-                    return;
-                }
-                agendamento.motivo = `Aplicação de Vacina: ${agendamento.vacinaEscolhida}`;
-            }
-
-            carregarMedicos(agendamento.tipo);
-            esconderTodasEtapas();
-            document.getElementById('etapa-medicos').classList.add('ativa');
-
-            const btnVoltar = document.getElementById('btn-voltar-medicos');
-            if (agendamento.tipo === 'vacina') {
-                atualizarBarraProgresso(6, 6);
-                btnVoltar.onclick = () => {
-                    esconderTodasEtapas();
-                    document.getElementById('etapa-5-vacina-opcoes').classList.add('ativa');
-                    atualizarBarraProgresso(5, 6);
-                };
-            } else {
-                atualizarBarraProgresso(5, 5);
-                btnVoltar.onclick = () => {
-                    esconderTodasEtapas();
-                    document.getElementById(`etapa-4-${agendamento.tipo}`).classList.add('ativa');
-                    atualizarBarraProgresso(4, 5);
-                };
-            }
-        }
-
-        function carregarMedicos(tipo) {
-            const container = document.getElementById('lista-medicos');
-            container.innerHTML = '';
-
-            const lista = medicosBase[tipo] || [];
-            lista.forEach(med => {
-                const card = document.createElement('div');
-                card.className = 'card-medico';
-                card.innerHTML = `
-                    <img src="${med.foto}" alt="${med.nome}" class="avatar-medico">
-                    <div class="info-medico">
-                        <strong>${med.nome}</strong> (${med.crm})<br>
-                        <small>🕒 Horário: ${med.horario}</small>
-                    </div>
-                `;
-                card.onclick = () => {
-                    document.querySelectorAll('.card-medico').forEach(c => c.classList.remove('ativo'));
-                    card.classList.add('ativo');
-                    agendamento.medico = med.nome;
-                };
-                container.appendChild(card);
-            });
-        }
-
-        function calcularUrgenciaAutomatica(motivo, temperatura, temAlergia, alergiaTexto) {
-            const texto = (motivo + ' ' + alergiaTexto).toLowerCase();
-            const tempNum = parseFloat(temperatura) || 0;
-
-            const palavrasUrgentes = ['falta de ar', 'pressão alta', 'dor forte', 'desmaio', 'sangramento', 'peito', 'convulsão', 'pancada', 'grave'];
-            if (tempNum >= 37.8 || palavrasUrgentes.some(p => texto.includes(p))) {
-                return 3; // Urgente
-            }
-
-            const palavrasMedias = ['dor', 'tontura', 'enjoo', 'vomito', 'vômito', 'tosse', 'tratamento', 'asma'];
-            if ((tempNum > 0 && tempNum < 37.8) || palavrasMedias.some(p => texto.includes(p)) || texto.includes('febre') || temAlergia) {
-                return 2; // Média Urgência
-            }
-
-            return 1; // Pouca Urgência
-        }
-
-        function finalizarAgendamento() {
-            agendamento.nome = document.getElementById('nome-paciente').value;
-            agendamento.idade = document.getElementById('idade-paciente').value;
-
-            if (!agendamento.medico) {
-                alert('Por favor, selecione um profissional.');
-                return;
-            }
-
-            const nivelUrgenciaAuto = calcularUrgenciaAutomatica(
-                agendamento.motivo, 
-                agendamento.temperatura, 
-                agendamento.temAlergia, 
-                agendamento.alergiaTexto
-            );
-
-            const novaConsulta = {
-                id: Date.now(),
-                nome: agendamento.nome,
-                idade: agendamento.idade,
-                tipo: agendamento.tipo.toUpperCase(),
-                medico: agendamento.medico,
-                motivo: agendamento.motivo,
-                alergia: agendamento.temAlergia ? agendamento.alergiaTexto : 'Nenhuma',
-                temperatura: agendamento.temperatura,
-                urgencia: nivelUrgenciaAuto,
-                dataHora: new Date().toLocaleString('pt-BR')
-            };
-
-            consultas.push(novaConsulta);
-            renderizarConsultas();
-
-            alert('Consulta agendada com sucesso! O nível de prioridade foi determinado automaticamente.');
-
-            // Reset do Formulário
-            agendamento = { nome: '', idade: '', tipo: '', motivo: '', temAlergia: false, alergiaTexto: '', vacinaEscolhida: '', temperatura: '', medico: '' };
-            document.getElementById('nome-paciente').value = '';
-            document.getElementById('idade-paciente').value = '';
-            document.getElementById('motivo-checape').value = '';
-            document.getElementById('detalhe-alergia-texto').value = '';
-            document.getElementById('temperatura-paciente').value = '';
-            document.querySelectorAll('.card-opcao').forEach(c => c.classList.remove('selecionado'));
-
-            esconderTodasEtapas();
-            document.getElementById('etapa-1').classList.add('ativa');
-            atualizarBarraProgresso(1, 5);
-        }
-
-        function filtrarPorTipo(tipo, el) {
-            document.querySelectorAll('.btn-filtro-tipo').forEach(b => b.classList.remove('ativo'));
-            el.classList.add('ativo');
-            tipoFiltroAtual = tipo;
-            renderizarConsultas();
-        }
-
-        function renderizarConsultas() {
-            const container = document.getElementById('container-consultas');
-
-            // ORDENAÇÃO AUTOMÁTICA STRICT: Prioridade de urgência (3 -> 2 -> 1) e depois mais recentes (ID maior)
-            consultas.sort((a, b) => {
-                if (b.urgencia !== a.urgencia) {
-                    return b.urgencia - a.urgencia;
-                }
-                return b.id - a.id;
-            });
-
-            // Aplica filtro por Tipo de Consulta
-            let consultasFiltradas = consultas;
-            if (tipoFiltroAtual !== 'TODOS') {
-                consultasFiltradas = consultas.filter(c => c.tipo === tipoFiltroAtual);
-            }
-
-            if (consultasFiltradas.length === 0) {
-                container.innerHTML = '<p class="mensagem-vazia">Nenhuma consulta agendada para este tipo no momento.</p>';
-                return;
-            }
-
-            container.innerHTML = '';
-            consultasFiltradas.forEach(item => {
-                let tagUrgencia = item.urgencia === 3 ? '🚨 Urgente' : (item.urgencia === 2 ? '⚠️ Média Urgência' : '🟢 Pouca Urgência');
-                let classeBorder = item.urgencia === 3 ? 'p-3' : (item.urgencia === 2 ? 'p-2' : 'p-1');
-
-                const card = document.createElement('div');
-                card.className = `card-consulta ${classeBorder}`;
-                card.innerHTML = `
-                    <div class="consulta-header">
-                        <span class="consulta-paciente">👤 ${item.nome} (${item.idade} anos)</span>
-                        <span class="consulta-tag tag-${item.urgencia}">${tagUrgencia}</span>
-                    </div>
-                    <div class="consulta-detalhe">🩺 <strong>Atendimento:</strong> ${item.tipo} com ${item.medico}</div>
-                    <div class="consulta-detalhe">📝 <strong>Motivo/Detalhes:</strong> ${item.motivo}</div>
-                    ${item.alergia && item.alergia !== 'Nenhuma' ? `<div class="consulta-detalhe">⚠️ <strong>Alergia/Comorbidade:</strong> ${item.alergia}</div>` : ''}
-                    ${item.temperatura ? `<div class="consulta-detalhe">🌡️ <strong>Temperatura:</strong> ${item.temperatura} °C</div>` : ''}
-                    <div class="consulta-detalhe">🕒 <strong>Data/Hora:</strong> ${item.dataHora}</div>
-                    <div class="consulta-acoes">
-                        <button class="btn-ouvir-card" onclick="falarTexto('Paciente ${item.nome}, consulta de ${item.tipo} com ${item.medico}.')">🔊 Ouvir</button>
-                        <button class="btn-cancelar-card" onclick="cancelarConsulta(${item.id})">❌ Cancelar</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function cancelarConsulta(id) {
-            consultas = consultas.filter(c => c.id !== id);
-            renderizarConsultas();
-        }
-
         function falarTexto(texto) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();

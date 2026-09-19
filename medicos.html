@@ -3,12 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Médicos em Atendimento - SUSi!</title>
+    <title>SUSI! - Médicos e Proficionais </title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Favicon-Susi.jfif">
+    <style>
+        .container-medicos {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .filtros-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .busca-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .busca-input:focus {
+            border-color: #0284c7;
+        }
+
+        .select-filtro {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            background-color: #ffffff;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .grid-medicos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card-medico-completo {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .card-medico-completo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+
+        .avatar-medico-lg {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 12px;
+            border: 3px solid #0284c7;
+        }
+
+        .nome-medico {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .badge-especialidade {
+            display: inline-block;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* ESTILOS DA OBSERVAÇÃO DE PRESENÇA NO POSTO */
+        .status-presenca {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .status-presenca.presente {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .status-presenca.ausente {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .status-ponto {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-presenca.presente .status-ponto {
+            background-color: #22c55e;
+        }
+
+        .status-presenca.ausente .status-ponto {
+            background-color: #ef4444;
+        }
+
+        .info-registro, .info-horario {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .btn-agendar-direto {
+            margin-top: 15px;
+            width: 100%;
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.2s;
+        }
+
+        .btn-agendar-direto:hover {
+            background-color: #0369a1;
+        }
+
+        .sem-resultados {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- NAVBAR IGUAL EM TODAS AS PÁGINAS -->
+    <!-- BARRA SUPERIOR DE NAVEGAÇÃO -->
     <header class="aws-navbar">
         <div class="aws-nav-container">
             <div class="aws-nav-left">
@@ -18,25 +179,221 @@
                 <nav class="aws-nav-links">
                     <a href="index.html">Início</a>
                     <a href="marcar-consulta.html">Marcar Consulta</a>
-                    <a href="medicos.html">Médicos</a>
-                    <a href="central-atendimento.html">Ajuda</a>
+                    <a href="meus-atendimentos.html">Meus Atendimentos</a>
+                    <a href="medicos.html" class="ativo">Médicos</a>
                 </nav>
             </div>
             <div class="aws-nav-right">
-                <a href="login.html" class="aws-btn-login">Entrar</a>
+                <a href="login.html" class="aws-btn-login">Criar conta / Login</a>
             </div>
         </div>
     </header>
 
-    <!-- CONTEÚDO DA PÁGINA ESPECÍFICA -->
     <main class="main-container">
-        <div class="painel-agendamento">
-            <h2>👨‍⚕️ Médicos em Atendimento</h2>
-            <p>Em breve: Lista de profissionais e especialidades disponíveis.</p>
-            <br>
-            <a href="index.html" style="color: #0056b3; font-weight: bold;">← Voltar ao Menu Principal</a>
+        <div class="container-medicos">
+            
+            <h1 style="color: #1e293b; margin-bottom: 8px;">Nossa Equipe Médica - PB & RN</h1>
+            <p style="color: #64748b; margin-bottom: 25px;">Consulte os profissionais de saúde cadastrados na Paraíba e no Rio Grande do Norte e verifique a presença no posto.</p>
+
+            <!-- BARRA DE PESQUISA E FILTROS -->
+            <div class="filtros-bar">
+                <input type="text" id="campo-busca" class="busca-input" placeholder="Pesquisar por nome do médico..." oninput="filtrarMedicos()">
+                
+                <select id="filtro-especialidade" class="select-filtro" onchange="filtrarMedicos()">
+                    <option value="todos">Todas as Especialidades</option>
+                    <option value="Clínica Geral">Clínica Geral (Checape)</option>
+                    <option value="Odontologia">Odontologia (Dentista)</option>
+                    <option value="Enfermagem">Enfermagem (Vacinas)</option>
+                </select>
+
+                <select id="filtro-estado" class="select-filtro" onchange="filtrarMedicos()">
+                    <option value="todos">Todos os Estados (PB e RN)</option>
+                    <option value="PB">Paraíba (PB)</option>
+                    <option value="RN">Rio Grande do Norte (RN)</option>
+                </select>
+
+                <select id="filtro-presenca" class="select-filtro" onchange="filtrarMedicos()">
+                    <option value="todos">Todos os Status</option>
+                    <option value="presente">Apenas Presentes no Posto</option>
+                    <option value="ausente">Apenas Não Presentes</option>
+                </select>
+            </div>
+
+            <!-- GRID COM TODOS OS MÉDICOS -->
+            <div id="grid-medicos" class="grid-medicos">
+                <!-- Renderizado via JS -->
+            </div>
+
         </div>
     </main>
 
+    <script>
+        // Lista com 10 médicos: exatamente 3 presentes e 2 não presentes para PB e RN
+        const todosMedicos = [
+            // --- PARAÍBA (PB) ---
+            {
+                id: 1,
+                nome: 'Dra. Ana Silva',
+                registro: 'CRM-PB 9841',
+                estado: 'PB',
+                especialidade: 'Clínica Geral',
+                horario: '08:00 - 12:00',
+                presente: true, // PB - Presente (1/3)
+                foto: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 2,
+                nome: 'Dr. Roberto Lima',
+                registro: 'CRO-PB 4310',
+                estado: 'PB',
+                especialidade: 'Odontologia',
+                horario: '09:00 - 15:00',
+                presente: true, // PB - Presente (2/3)
+                foto: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 3,
+                nome: 'Enfª. Amanda Oliveira',
+                registro: 'COREN-PB 49373-ENF',
+                estado: 'PB',
+                especialidade: 'Enfermagem',
+                horario: '07:00 - 18:00',
+                presente: true, // PB - Presente (3/3)
+                foto: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 4,
+                nome: 'Dra. Beatriz Costa',
+                registro: 'CRM-PB 12450',
+                estado: 'PB',
+                especialidade: 'Clínica Geral',
+                horario: '13:00 - 19:00',
+                presente: false, // PB - Não Presente (1/2)
+                foto: 'https://images.unsplash.com/photo-1594824813572-c208c105572f?w=150&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 5,
+                nome: 'Dr. Gabriel Vasconcelos',
+                registro: 'CRO-PB 5219',
+                estado: 'PB',
+                especialidade: 'Odontologia',
+                horario: '10:00 - 16:00',
+                presente: false, // PB - Não Presente (2/2)
+                foto: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=150&auto=format&fit=crop&q=80'
+            },
+
+            // --- RIO GRANDE DO NORTE (RN) ---
+            {
+                id: 6,
+                nome: 'Dr. Carlos Souza',
+                registro: 'CRM-RN 8320',
+                estado: 'RN',
+                especialidade: 'Clínica Geral',
+                horario: '13:00 - 17:00',
+                presente: true, // RN - Presente (1/3)
+                foto: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=150&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 7,
+                nome: 'Enfº. Thiago Cavalcanti',
+                registro: 'COREN-RN 38291-ENF',
+                estado: 'RN',
+                especialidade: 'Enfermagem',
+                horario: '12:00 - 18:00',
+                presente: true, // RN - Presente (2/3)
+                foto: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=150&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 8,
+                nome: 'Dra. Juliana Medeiros',
+                registro: 'CRM-RN 11024',
+                estado: 'RN',
+                especialidade: 'Clínica Geral',
+                horario: '07:30 - 13:30',
+                presente: true, // RN - Presente (3/3)
+                foto: 'https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=150&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 9,
+                nome: 'Dra. Camila Nogueira',
+                registro: 'CRO-RN 5890',
+                estado: 'RN',
+                especialidade: 'Odontologia',
+                horario: '14:00 - 18:00',
+                presente: false, // RN - Não Presente (1/2)
+                foto: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&auto=format&fit=crop&q=80'
+            },
+            {
+                id: 10,
+                nome: 'Enfª. Mariana Ramos',
+                registro: 'COREN-RN 51204-ENF',
+                estado: 'RN',
+                especialidade: 'Enfermagem',
+                horario: '07:00 - 15:00',
+                presente: false, // RN - Não Presente (2/2)
+                foto: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=150&auto=format&fit=crop&q=80'
+            }
+        ];
+
+        window.onload = function() {
+            renderizarMedicos(todosMedicos);
+        };
+
+        function renderizarMedicos(lista) {
+            const container = document.getElementById('grid-medicos');
+            container.innerHTML = '';
+
+            if (lista.length === 0) {
+                container.innerHTML = '<div class="sem-resultados">Nenhum profissional encontrado com os filtros aplicados.</div>';
+                return;
+            }
+
+            lista.forEach(medico => {
+                const card = document.createElement('div');
+                card.className = 'card-medico-completo';
+
+                // Define as classes e textos de presença
+                const classeStatus = medico.presente ? 'presente' : 'ausente';
+                const textoStatus = medico.presente ? 'Presente no posto' : 'Não está no posto';
+
+                card.innerHTML = `
+                    <img src="${medico.foto}" alt="${medico.nome}" class="avatar-medico-lg">
+                    <div class="nome-medico">${medico.nome}</div>
+                    <span class="badge-especialidade">${medico.especialidade} (${medico.estado})</span>
+                    
+                    <div class="status-presenca ${classeStatus}">
+                        <span class="status-ponto"></span>
+                        <span>${textoStatus}</span>
+                    </div>
+
+                    <div class="info-registro">📄 ${medico.registro}</div>
+                    <div class="info-horario">🕒 Horário: ${medico.horario}</div>
+                    <a href="marcar-consulta.html" class="btn-agendar-direto">Agendar Consulta</a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filtrarMedicos() {
+            const busca = document.getElementById('campo-busca').value.toLowerCase().trim();
+            const especialidade = document.getElementById('filtro-especialidade').value;
+            const estado = document.getElementById('filtro-estado').value;
+            const statusPresenca = document.getElementById('filtro-presenca').value;
+
+            const resultado = todosMedicos.filter(medico => {
+                const combinaNome = medico.nome.toLowerCase().includes(busca);
+                const combinaEspecialidade = especialidade === 'todos' || medico.especialidade === especialidade;
+                const combinaEstado = estado === 'todos' || medico.estado === estado;
+                
+                let combinaPresenca = true;
+                if (statusPresenca === 'presente') combinaPresenca = medico.presente === true;
+                if (statusPresenca === 'ausente') combinaPresenca = medico.presente === false;
+
+                return combinaNome && combinaEspecialidade && combinaEstado && combinaPresenca;
+            });
+
+            renderizarMedicos(resultado);
+        }
+    </script>
 </body>
 </html>
