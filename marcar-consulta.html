@@ -155,6 +155,37 @@
             box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.2);
         }
 
+        .box-alergias {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #334155;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: #0088cc;
+            cursor: pointer;
+        }
+
         .bloco-temperatura {
             display: none;
             background-color: #fff7ed;
@@ -302,15 +333,16 @@
             display: block;
         }
 
-        /* --- ESTILOS DO MODAL / AVISO DE CONFIRMAÇÃO --- */
-        #modal-confirmacao {
+        /* --- MODAL CONFIRMAÇÃO --- */
+        .modal-overlay {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(4px);
+            background-color: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(2px);
             z-index: 99999;
             align-items: center;
             justify-content: center;
@@ -318,32 +350,45 @@
 
         .modal-card {
             background: #ffffff;
-            border-radius: 28px;
-            padding: 32px 28px 28px;
-            max-width: 400px;
+            border-radius: 24px;
+            padding: 36px 32px 32px;
+            max-width: 440px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+            animation: fadeInModal 0.2s ease-out;
+        }
+
+        @keyframes fadeInModal {
+            from {
+                transform: scale(0.92);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .modal-icone {
-            font-size: 52px;
-            margin-bottom: 12px;
+            font-size: 54px;
+            margin-bottom: 16px;
             display: block;
+            line-height: 1;
         }
 
         .modal-titulo {
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             font-weight: 700;
-            color: #0f172a;
+            color: #1e293b;
             margin: 0 0 10px 0;
         }
 
         .modal-subtitulo {
             font-size: 0.95rem;
             color: #64748b;
-            margin: 0 0 25px 0;
-            line-height: 1.4;
+            margin: 0 0 28px 0;
+            line-height: 1.45;
         }
 
         .modal-botoes {
@@ -353,19 +398,24 @@
 
         .btn-modal-voltar {
             flex: 1;
-            padding: 14px;
+            padding: 12px;
             border-radius: 12px;
             border: none;
             background-color: #f1f5f9;
-            color: #334155;
+            color: #475569;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-modal-voltar:hover {
+            background-color: #e2e8f0;
         }
 
         .btn-modal-confirmar {
             flex: 1.2;
-            padding: 14px;
+            padding: 12px;
             border-radius: 12px;
             border: none;
             background-color: #0088cc;
@@ -373,6 +423,24 @@
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-modal-confirmar:hover {
+            background-color: #0077b5;
+        }
+
+        /* CARD DE SUCESSO / CONSULTA MARCADA */
+        .modal-sucesso-conteudo {
+            display: none;
+            text-align: center;
+        }
+
+        .icone-sucesso {
+            font-size: 60px;
+            color: #16a34a;
+            margin-bottom: 15px;
+            display: block;
         }
     </style>
 </head>
@@ -450,23 +518,65 @@
                 </div>
             </div>
 
-            <!-- PASSO 4: MOTIVO -->
+            <!-- PASSO 4: DINÂMICO CONFORME O TIPO SELECIONADO -->
             <div id="passo-4" class="passo-conteudo">
                 <div class="caixa-pergunta">
-                    <h3>4. Qual o motivo ou sintoma principal?</h3>
-                    <button class="btn-ouvir" onclick="falarTexto('Qual o motivo ou sintoma principal?')">🔊 Ouvir</button>
+                    <h3 id="titulo-passo-4">4. Qual o motivo ou sintoma principal?</h3>
+                    <button class="btn-ouvir" onclick="falarTexto(document.getElementById('titulo-passo-4').innerText)">🔊 Ouvir</button>
                 </div>
-                <input type="text" id="input-motivo" class="campo-entrada" placeholder="Ex: Dor de cabeça, febre, dor no dente..." oninput="verificarSintomaFebre(this.value)">
 
-                <div id="bloco-temperatura" class="bloco-temperatura">
-                    <label for="input-temperatura" style="display: block; font-weight: bold; color: #c2410c; margin-bottom: 8px;">
-                        🌡️ Qual é a temperatura atual (°C)?
-                    </label>
-                    <input type="number" step="0.1" id="input-temperatura" class="campo-entrada" placeholder="Ex: 38.5" style="margin-bottom: 0;">
+                <!-- OPÇÃO A: GERAL (CHECAPE) -->
+                <div id="conteudo-passo-geral">
+                    <input type="text" id="input-motivo" class="campo-entrada" placeholder="Ex: Dor de cabeça, febre, indisposição..." oninput="verificarSintomaFebre(this.value)">
+
+                    <div id="bloco-temperatura" class="bloco-temperatura">
+                        <label for="input-temperatura" style="display: block; font-weight: bold; color: #c2410c; margin-bottom: 8px;">
+                            🌡️ Qual é a temperatura atual (°C)?
+                        </label>
+                        <input type="number" step="0.1" id="input-temperatura" class="campo-entrada" placeholder="Ex: 38.5" style="margin-bottom: 0;">
+                    </div>
+                </div>
+
+                <!-- OPÇÃO B: DENTISTA -->
+                <div id="conteudo-passo-dentista" style="display: none;">
+                    <div class="grid-opcoes-botoes">
+                        <button type="button" class="btn-opcao-tipo btn-submotivo-dentista" onclick="selecionarSubmotivoDentista('Checape Geral e Limpeza', this)">
+                            <span>🪥</span> Checape Geral / Limpeza
+                        </button>
+                        <button type="button" class="btn-opcao-tipo btn-submotivo-dentista" onclick="selecionarSubmotivoDentista('Manutenção ou Colocação de Aparelho', this)">
+                            <span>😬</span> Manutenção / Aparelho
+                        </button>
+                        <button type="button" class="btn-opcao-tipo btn-submotivo-dentista" onclick="selecionarSubmotivoDentista('Cirurgia ou Extração', this)">
+                            <span>💉</span> Cirurgia / Extração
+                        </button>
+                    </div>
+                </div>
+
+                <!-- OPÇÃO C: VACINA -->
+                <div id="conteudo-passo-vacina" style="display: none;">
+                    <div class="box-alergias">
+                        <strong>Possui alguma alergia ou comorbidade conhecida?</strong>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="Alergia a Ovo" onchange="atualizarOpcoesVacinas()"> Alergia grave a Ovo
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="Imunossuprimido" onchange="atualizarOpcoesVacinas()"> Imunossupressão / Tratamento Especial
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" value="Gestante" onchange="atualizarOpcoesVacinas()"> Gestante
+                            </label>
+                        </div>
+                    </div>
+
+                    <label style="display: block; font-weight: bold; color: #334155; margin-bottom: 10px;">Vacinas Disponíveis Recomendadas:</label>
+                    <div id="container-vacinas-dinamicas" class="grid-opcoes-botoes">
+                        <!-- Gerado via JS -->
+                    </div>
                 </div>
             </div>
 
-            <!-- PASSO 5: MÉDICO -->
+            <!-- PASSO 5: MÉDICO / PROFISSIONAL -->
             <div id="passo-5" class="passo-conteudo">
                 <div class="caixa-pergunta">
                     <h3>5. Qual o médico ou profissional desejado?</h3>
@@ -485,16 +595,28 @@
 
     </main>
 
-    <!-- CAIXA DE CONFIRMAÇÃO (MODAL) -->
-    <div id="modal-confirmacao" style="display: none;">
+    <!-- MODAL CONFIRMAÇÃO & MENSAGEM DE SUCESSO -->
+    <div id="modal-confirmacao" class="modal-overlay">
         <div class="modal-card">
-            <span class="modal-icone">📋</span>
-            <h2 class="modal-titulo">Confirmar Consulta</h2>
-            <p class="modal-subtitulo">Tem certeza de que deseja realizar este agendamento?</p>
-            <div class="modal-botoes">
-                <button type="button" class="btn-modal-voltar" onclick="fecharModal()">Voltar</button>
-                <button type="button" class="btn-modal-confirmar" onclick="salvarAtendimento()">Sim, Confirmar</button>
+            
+            <!-- ETAPA 1: PERGUNTA -->
+            <div id="modal-pergunta-conteudo">
+                <span class="modal-icone">📅</span>
+                <h2 class="modal-titulo">Marcar Consulta</h2>
+                <p class="modal-subtitulo">Tem a certeza de que deseja realizar este agendamento?</p>
+                <div class="modal-botoes">
+                    <button type="button" class="btn-modal-voltar" onclick="fecharModal()">Voltar</button>
+                    <button type="button" class="btn-modal-confirmar" onclick="salvarAtendimento()">Sim, Confirmar</button>
+                </div>
             </div>
+
+            <!-- ETAPA 2: MENSAGEM DE SUCESSO -->
+            <div id="modal-sucesso-conteudo" class="modal-sucesso-conteudo">
+                <span class="icone-sucesso">✅</span>
+                <h2 class="modal-titulo" style="color: #16a34a;">Consulta marcada com sucesso!</h2>
+                <p class="modal-subtitulo">Seu agendamento foi registrado no sistema. Redirecionando para Seus Atendimentos...</p>
+            </div>
+
         </div>
     </div>
 
@@ -502,6 +624,7 @@
         let passoAtual = 1;
         const totalPassos = 5;
         let tipoSelecionado = "";
+        let submotivoSelecionado = "";
         let medicoSelecionado = "";
 
         const medicosPorTipo = {
@@ -522,10 +645,74 @@
 
         function selecionarTipo(valor, elemento) {
             tipoSelecionado = valor;
+            submotivoSelecionado = "";
             medicoSelecionado = "";
-            document.querySelectorAll('.btn-opcao-tipo').forEach(btn => btn.classList.remove('selecionado'));
+            
+            document.querySelectorAll('#passo-3 .btn-opcao-tipo').forEach(btn => btn.classList.remove('selecionado'));
             elemento.classList.add('selecionado');
+            
+            configurarPasso4PorTipo();
             atualizarGridMedicos(valor);
+        }
+
+        function configurarPasso4PorTipo() {
+            const tituloPasso4 = document.getElementById('titulo-passo-4');
+            const divGeral = document.getElementById('conteudo-passo-geral');
+            const divDentista = document.getElementById('conteudo-passo-dentista');
+            const divVacina = document.getElementById('conteudo-passo-vacina');
+
+            divGeral.style.display = 'none';
+            divDentista.style.display = 'none';
+            divVacina.style.display = 'none';
+
+            if (tipoSelecionado === 'DENTISTA') {
+                tituloPasso4.innerText = "4. Qual o serviço odontológico necessário?";
+                divDentista.style.display = 'block';
+            } else if (tipoSelecionado === 'VACINA') {
+                tituloPasso4.innerText = "4. Escolha a vacina e informe alergias/comorbidades:";
+                divVacina.style.display = 'block';
+                atualizarOpcoesVacinas();
+            } else {
+                tituloPasso4.innerText = "4. Qual o motivo ou sintoma principal?";
+                divGeral.style.display = 'block';
+            }
+        }
+
+        function selecionarSubmotivoDentista(motivo, elemento) {
+            submotivoSelecionado = motivo;
+            document.querySelectorAll('.btn-submotivo-dentista').forEach(btn => btn.classList.remove('selecionado'));
+            elemento.classList.add('selecionado');
+        }
+
+        function atualizarOpcoesVacinas() {
+            const container = document.getElementById('container-vacinas-dinamicas');
+            const checkboxes = document.querySelectorAll('#conteudo-passo-vacina input[type="checkbox"]:checked');
+            const condicoes = Array.from(checkboxes).map(cb => cb.value);
+
+            let listaVacinas = [
+                { nome: "Influenza (Gripe)", segura: true },
+                { nome: "Tétano / dT", segura: true },
+                { nome: "Hepatite B", segura: true },
+                { nome: "Tríplice Viral (Vírus Vivo)", segura: !condicoes.includes("Imunossuprimido") && !condicoes.includes("Gestante") },
+                { nome: "Febre Amarela (Vírus Vivo)", segura: !condicoes.includes("Imunossuprimido") && !condicoes.includes("Gestante") && !condicoes.includes("Alergia a Ovo") },
+                { nome: "COVID-19 Inativada", segura: true }
+            ];
+
+            container.innerHTML = "";
+            listaVacinas.forEach(vac => {
+                if (vac.segura) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'btn-opcao-tipo btn-vacina-item' + (submotivoSelecionado === vac.nome ? ' selecionado' : '');
+                    btn.innerHTML = `<span>💉</span> ${vac.nome}`;
+                    btn.onclick = () => {
+                        submotivoSelecionado = vac.nome;
+                        document.querySelectorAll('.btn-vacina-item').forEach(b => b.classList.remove('selecionado'));
+                        btn.classList.add('selecionado');
+                    };
+                    container.appendChild(btn);
+                }
+            });
         }
 
         function atualizarGridMedicos(tipo) {
@@ -571,10 +758,18 @@
                 if (passoAtual === 1 && !document.getElementById('input-nome').value.trim()) return alert('Por favor, digite o nome do paciente.');
                 if (passoAtual === 2 && !document.getElementById('input-idade').value.trim()) return alert('Por favor, informe a idade.');
                 if (passoAtual === 3 && !tipoSelecionado) return alert('Por favor, selecione o tipo de consulta.');
-                if (passoAtual === 4 && !document.getElementById('input-motivo').value.trim()) return alert('Por favor, descreva o motivo ou sintoma.');
-                if (passoAtual === 5 && !medicoSelecionado) return alert('Por favor, selecione um médico.');
                 
-                // Se clicar em "Concluir" no Passo 5, exibe o Modal em vez de redirecionar imediatamente
+                if (passoAtual === 4) {
+                    if (tipoSelecionado === 'CHECAPE' && !document.getElementById('input-motivo').value.trim()) {
+                        return alert('Por favor, descreva o motivo ou sintoma.');
+                    }
+                    if ((tipoSelecionado === 'DENTISTA' || tipoSelecionado === 'VACINA') && !submotivoSelecionado) {
+                        return alert('Por favor, selecione uma opção antes de avançar.');
+                    }
+                }
+
+                if (passoAtual === 5 && !medicoSelecionado) return alert('Por favor, selecione um profissional.');
+                
                 if (passoAtual === totalPassos) {
                     abrirModal();
                     return;
@@ -595,6 +790,8 @@
         }
 
         function abrirModal() {
+            document.getElementById('modal-pergunta-conteudo').style.display = 'block';
+            document.getElementById('modal-sucesso-conteudo').style.display = 'none';
             document.getElementById('modal-confirmacao').style.display = 'flex';
         }
 
@@ -602,12 +799,22 @@
             document.getElementById('modal-confirmacao').style.display = 'none';
         }
 
-        function calcularNivelUrgencia(idade, temperatura, motivo) {
-            const tempVal = parseFloat(temperatura);
+        function obterMotivoFormatado() {
+            if (tipoSelecionado === 'DENTISTA' || tipoSelecionado === 'VACINA') {
+                return submotivoSelecionado;
+            }
+            const motivoTexto = document.getElementById('input-motivo').value.trim();
+            const tempInput = document.getElementById('input-temperatura').value;
+            return tempInput ? `${motivoTexto} (Temperatura: ${tempInput}°C)` : motivoTexto;
+        }
+
+        function calcularNivelUrgencia(idade, motivo) {
+            const tempInput = document.getElementById('input-temperatura').value;
+            const tempVal = parseFloat(tempInput);
             const idadeVal = parseInt(idade, 10);
             const motivoLower = motivo.toLowerCase();
 
-            if ((tempVal && tempVal >= 38.5) || idadeVal <= 12 || idadeVal >= 60 || motivoLower.includes('dor forte') || motivoLower.includes('falta de ar')) {
+            if ((tempVal && tempVal >= 38.5) || idadeVal <= 12 || idadeVal >= 60 || motivoLower.includes('dor forte') || motivoLower.includes('cirurgia')) {
                 return 3; 
             }
             if ((tempVal && tempVal >= 37.5) || motivoLower.includes('febre') || motivoLower.includes('dor')) {
@@ -619,11 +826,8 @@
         function salvarAtendimento() {
             const nome = document.getElementById('input-nome').value.trim();
             const idade = document.getElementById('input-idade').value.trim();
-            const motivoTexto = document.getElementById('input-motivo').value.trim();
-            const tempInput = document.getElementById('input-temperatura').value;
-            
-            const motivoFinal = tempInput ? `${motivoTexto} (Temperatura: ${tempInput}°C)` : motivoTexto;
-            const urgenciaNivel = calcularNivelUrgencia(idade, tempInput, motivoTexto);
+            const motivoFinal = obterMotivoFormatado();
+            const urgenciaNivel = calcularNivelUrgencia(idade, motivoFinal);
 
             const novoAtendimento = {
                 id: Date.now(),
@@ -642,8 +846,15 @@
             consultas.push(novoAtendimento);
             localStorage.setItem('susi_consultas', JSON.stringify(consultas));
 
-            fecharModal();
-            window.location.href = 'meus-atendimentos.html';
+            // EXIBIR A MENSAGEM DE SUCESSO
+            document.getElementById('modal-pergunta-conteudo').style.display = 'none';
+            document.getElementById('modal-sucesso-conteudo').style.display = 'block';
+
+            // REDIRECIONAR APÓS 1.8 SEGUNDOS
+            setTimeout(() => {
+                fecharModal();
+                window.location.href = 'meus-atendimentos.html';
+            }, 1800);
         }
 
         function falarTexto(texto) {
