@@ -5,8 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marcar Consulta - SUSi!</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="Favicon-Susi.jfif">
     <style>
-        /* CSS do formulário de marcar consulta */
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
         .main-container {
             max-width: 900px;
             margin: 30px auto;
@@ -98,33 +105,206 @@
             box-sizing: border-box;
             outline: none;
             margin-bottom: 25px;
+            background-color: #fff;
         }
 
         .campo-entrada:focus {
             border-color: #0088cc;
         }
 
-        .btn-avancar {
+        .grid-opcoes-botoes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 650px) {
+            .grid-opcoes-botoes {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-opcao-tipo {
+            background-color: #f8fafc;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 18px 15px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-opcao-tipo:hover {
+            border-color: #0088cc;
+            background-color: #f0f9ff;
+            color: #0369a1;
+        }
+
+        .btn-opcao-tipo.selecionado {
+            border-color: #0088cc;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.2);
+        }
+
+        .bloco-temperatura {
+            display: none;
+            background-color: #fff7ed;
+            border: 1px solid #ffedd5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: -10px;
+            margin-bottom: 25px;
+        }
+
+        .grid-medicos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card-medico {
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-medico:hover {
+            border-color: #0088cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .card-medico.selecionado {
+            border-color: #0088cc;
+            background-color: #f0f9ff;
+            box-shadow: 0 0 0 3px rgba(0, 136, 204, 0.25);
+        }
+
+        .card-medico img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #0088cc;
+            margin-bottom: 12px;
+        }
+
+        .card-medico h4 {
+            margin: 0 0 6px 0;
+            color: #1e293b;
+            font-size: 1.1rem;
+        }
+
+        .badge-especialidade {
+            background: #e0f2fe;
+            color: #0284c7;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .badge-status {
+            background: #dcfce7;
+            color: #166534;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .info-detalhe {
+            font-size: 0.82rem;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .btn-selecionar-medico {
             width: 100%;
+            margin-top: 15px;
+            padding: 10px;
             background: #0088cc;
             color: white;
             border: none;
-            padding: 14px;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             cursor: pointer;
             transition: background 0.2s;
         }
 
+        .card-medico.selecionado .btn-selecionar-medico {
+            background: #0369a1;
+        }
+
+        .botoes-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-avancar, .btn-voltar {
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .btn-avancar {
+            flex: 2;
+            background: #0088cc;
+            color: white;
+        }
+
         .btn-avancar:hover {
             background: #0077b5;
+        }
+
+        .btn-voltar {
+            flex: 1;
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-voltar:hover {
+            background: #cbd5e1;
+        }
+
+        .passo-conteudo {
+            display: none;
+        }
+
+        .passo-conteudo.ativo {
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <!-- CABEÇALHO PADRONIZADO -->
     <header class="aws-navbar">
         <div class="aws-nav-container">
             <div class="aws-nav-left">
@@ -153,26 +333,224 @@
 
         <div class="card-passos">
             <div class="progresso-header">
-                <span>Passo 1 de 5</span>
-                <span>20% Concluído</span>
+                <span id="texto-passo">Passo 1 de 5</span>
+                <span id="texto-porcentagem">20% Concluído</span>
             </div>
             <div class="barra-progresso-fundo">
-                <div class="barra-progresso-preenchimento"></div>
+                <div id="barra-progresso" class="barra-progresso-preenchimento"></div>
             </div>
 
-            <div class="caixa-pergunta">
-                <h3>1. Quem é o paciente?</h3>
-                <button class="btn-ouvir" onclick="falarTexto('Quem é o paciente?')">🔊 Ouvir</button>
+            <!-- PASSO 1: NOME -->
+            <div id="passo-1" class="passo-conteudo ativo">
+                <div class="caixa-pergunta">
+                    <h3>1. Qual é o seu nome completo?</h3>
+                    <button class="btn-ouvir" onclick="falarTexto('Qual é o seu nome completo?')">🔊 Ouvir</button>
+                </div>
+                <input type="text" id="input-nome" class="campo-entrada" placeholder="Digite o nome completo do paciente...">
             </div>
 
-            <input type="text" class="campo-entrada" placeholder="Digite o Nome Completo Aqui...">
+            <!-- PASSO 2: IDADE -->
+            <div id="passo-2" class="passo-conteudo">
+                <div class="caixa-pergunta">
+                    <h3>2. Qual é a sua idade?</h3>
+                    <button class="btn-ouvir" onclick="falarTexto('Qual é a sua idade?')">🔊 Ouvir</button>
+                </div>
+                <input type="number" id="input-idade" class="campo-entrada" placeholder="Ex: 28" min="0" max="120">
+            </div>
 
-            <button class="btn-avancar">Avançar →</button>
+            <!-- PASSO 3: TIPO DE CONSULTA -->
+            <div id="passo-3" class="passo-conteudo">
+                <div class="caixa-pergunta">
+                    <h3>3. Qual é o tipo de consulta?</h3>
+                    <button class="btn-ouvir" onclick="falarTexto('Qual é o tipo de consulta?')">🔊 Ouvir</button>
+                </div>
+                <div class="grid-opcoes-botoes">
+                    <button type="button" class="btn-opcao-tipo" onclick="selecionarTipo('CHECAPE', this)">
+                        <span>🩺</span> Checape / Consulta Geral
+                    </button>
+                    <button type="button" class="btn-opcao-tipo" onclick="selecionarTipo('DENTISTA', this)">
+                        <span>🦷</span> Dentista
+                    </button>
+                    <button type="button" class="btn-opcao-tipo" onclick="selecionarTipo('VACINA', this)">
+                        <span>💉</span> Vacinação
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASSO 4: MOTIVO -->
+            <div id="passo-4" class="passo-conteudo">
+                <div class="caixa-pergunta">
+                    <h3>4. Qual o motivo ou sintoma principal?</h3>
+                    <button class="btn-ouvir" onclick="falarTexto('Qual o motivo ou sintoma principal?')">🔊 Ouvir</button>
+                </div>
+                <input type="text" id="input-motivo" class="campo-entrada" placeholder="Ex: Dor de cabeça, febre, dor no dente..." oninput="verificarSintomaFebre(this.value)">
+
+                <div id="bloco-temperatura" class="bloco-temperatura">
+                    <label for="input-temperatura" style="display: block; font-weight: bold; color: #c2410c; margin-bottom: 8px;">
+                        🌡️ Qual é a temperatura atual (°C)?
+                    </label>
+                    <input type="number" step="0.1" id="input-temperatura" class="campo-entrada" placeholder="Ex: 38.5" style="margin-bottom: 0;">
+                </div>
+            </div>
+
+            <!-- PASSO 5: MÉDICO -->
+            <div id="passo-5" class="passo-conteudo">
+                <div class="caixa-pergunta">
+                    <h3>5. Qual o médico ou profissional desejado?</h3>
+                    <button class="btn-ouvir" onclick="falarTexto('Qual o médico ou profissional desejado?')">🔊 Ouvir</button>
+                </div>
+                <div id="grid-medicos" class="grid-medicos">
+                    <p style="color: #64748b; text-align: center; grid-column: 1/-1;">Por favor, selecione o tipo de consulta no Passo 3 primeiro.</p>
+                </div>
+            </div>
+
+            <div class="botoes-container">
+                <button id="btn-voltar" class="btn-voltar" onclick="mudarPasso(-1)" style="display: none;">← Voltar</button>
+                <button id="btn-avancar" class="btn-avancar" onclick="mudarPasso(1)">Avançar →</button>
+            </div>
         </div>
 
     </main>
 
     <script>
+        let passoAtual = 1;
+        const totalPassos = 5;
+        let tipoSelecionado = "";
+        let medicoSelecionado = "";
+
+        const medicosPorTipo = {
+            'CHECAPE': [
+                { nome: "Dra. Ana Silva", especialidade: "Clínica Geral (PB)", status: "Presente no posto", registro: "CRM-PB 9841", horario: "08:00 - 12:00", foto: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300" },
+                { nome: "Dra. Beatriz Costa", especialidade: "Clínica Geral (PB)", status: "Presente no posto", registro: "CRM-PB 5521", horario: "13:00 - 17:00", foto: "https://images.unsplash.com/photo-1594824813566-7885a3961cd2?w=300" },
+                { nome: "Dr. Carlos Souza", especialidade: "Clínica Geral (RN)", status: "Presente no posto", registro: "CRM-RN 3312", horario: "08:00 - 14:00", foto: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300" }
+            ],
+            'DENTISTA': [
+                { nome: "Dr. Roberto Lima", especialidade: "Odontologia (PB)", status: "Presente no posto", registro: "CRO-PB 4310", horario: "09:00 - 15:00", foto: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=300" },
+                { nome: "Dra. Camila Nogueira", especialidade: "Odontologia (RN)", status: "Presente no posto", registro: "CRO-RN 6120", horario: "13:00 - 18:00", foto: "https://images.unsplash.com/photo-1594824813566-7885a3961cd2?w=300" }
+            ],
+            'VACINA': [
+                { nome: "Enfª. Amanda Oliveira", especialidade: "Enfermagem (PB)", status: "Presente no posto", registro: "COREN-PB 49373-ENF", horario: "07:00 - 18:00", foto: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300" },
+                { nome: "Enfº. Thiago Cavalcanti", especialidade: "Enfermagem (RN)", status: "Presente no posto", registro: "COREN-RN 10293-ENF", horario: "07:00 - 13:00", foto: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300" }
+            ]
+        };
+
+        function selecionarTipo(valor, elemento) {
+            tipoSelecionado = valor;
+            medicoSelecionado = "";
+            document.querySelectorAll('.btn-opcao-tipo').forEach(btn => btn.classList.remove('selecionado'));
+            elemento.classList.add('selecionado');
+            atualizarGridMedicos(valor);
+        }
+
+        function atualizarGridMedicos(tipo) {
+            const grid = document.getElementById('grid-medicos');
+            grid.innerHTML = '';
+            if (medicosPorTipo[tipo]) {
+                medicosPorTipo[tipo].forEach(medico => {
+                    const card = document.createElement('div');
+                    card.className = 'card-medico';
+                    card.onclick = () => escolherMedico(medico.nome, card);
+                    card.innerHTML = `
+                        <img src="${medico.foto}" alt="${medico.nome}">
+                        <h4>${medico.nome}</h4>
+                        <span class="badge-especialidade">${medico.especialidade}</span>
+                        <span class="badge-status">🟢 ${medico.status}</span>
+                        <div class="info-detalhe">📄 ${medico.registro}</div>
+                        <div class="info-detalhe">🕒 Horário: ${medico.horario}</div>
+                        <button type="button" class="btn-selecionar-medico">Selecionar Médico</button>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+
+        function escolherMedico(nome, elementoCard) {
+            medicoSelecionado = nome;
+            document.querySelectorAll('.card-medico').forEach(c => c.classList.remove('selecionado'));
+            elementoCard.classList.add('selecionado');
+        }
+
+        function verificarSintomaFebre(texto) {
+            const blocoTemperatura = document.getElementById('bloco-temperatura');
+            if (texto.toLowerCase().includes('febre')) {
+                blocoTemperatura.style.display = 'block';
+            } else {
+                blocoTemperatura.style.display = 'none';
+                document.getElementById('input-temperatura').value = '';
+            }
+        }
+
+        function mudarPasso(direcao) {
+            if (direcao === 1) {
+                if (passoAtual === 1 && !document.getElementById('input-nome').value.trim()) return alert('Por favor, digite o nome do paciente.');
+                if (passoAtual === 2 && !document.getElementById('input-idade').value.trim()) return alert('Por favor, informe a idade.');
+                if (passoAtual === 3 && !tipoSelecionado) return alert('Por favor, selecione o tipo de consulta.');
+                if (passoAtual === 4 && !document.getElementById('input-motivo').value.trim()) return alert('Por favor, descreva o motivo ou sintoma.');
+                if (passoAtual === 5 && !medicoSelecionado) return alert('Por favor, selecione um médico.');
+            }
+
+            document.getElementById(`passo-${passoAtual}`).classList.remove('ativo');
+            passoAtual += direcao;
+
+            if (passoAtual > totalPassos) {
+                salvarAtendimento();
+                return;
+            }
+
+            document.getElementById(`passo-${passoAtual}`).classList.add('ativo');
+            const porcentagem = (passoAtual / totalPassos) * 100;
+            document.getElementById('barra-progresso').style.width = `${porcentagem}%`;
+            document.getElementById('texto-passo').innerText = `Passo ${passoAtual} de ${totalPassos}`;
+            document.getElementById('texto-porcentagem').innerText = `${porcentagem}% Concluído`;
+
+            document.getElementById('btn-voltar').style.display = passoAtual > 1 ? 'block' : 'none';
+            document.getElementById('btn-avancar').innerText = passoAtual === totalPassos ? 'Concluir Agendamento ✔' : 'Avançar →';
+        }
+
+        function calcularNivelUrgencia(idade, temperatura, motivo) {
+            const tempVal = parseFloat(temperatura);
+            const idadeVal = parseInt(idade, 10);
+            const motivoLower = motivo.toLowerCase();
+
+            if ((tempVal && tempVal >= 38.5) || idadeVal <= 12 || idadeVal >= 60 || motivoLower.includes('dor forte') || motivoLower.includes('falta de ar')) {
+                return 3; 
+            }
+            if ((tempVal && tempVal >= 37.5) || motivoLower.includes('febre') || motivoLower.includes('dor')) {
+                return 2; 
+            }
+            return 1; 
+        }
+
+        function salvarAtendimento() {
+            const nome = document.getElementById('input-nome').value.trim();
+            const idade = document.getElementById('input-idade').value.trim();
+            const motivoTexto = document.getElementById('input-motivo').value.trim();
+            const tempInput = document.getElementById('input-temperatura').value;
+            
+            const motivoFinal = tempInput ? `${motivoTexto} (Temperatura: ${tempInput}°C)` : motivoTexto;
+            const urgenciaNivel = calcularNivelUrgencia(idade, tempInput, motivoTexto);
+
+            const novoAtendimento = {
+                id: Date.now(),
+                nome: nome,
+                idade: idade,
+                tipo: tipoSelecionado,
+                motivo: motivoFinal,
+                medico: medicoSelecionado,
+                dataHora: new Date().toLocaleString('pt-BR'),
+                urgencia: urgenciaNivel,
+                status: 'Aguardando'
+            };
+
+            const salvas = localStorage.getItem('susi_consultas');
+            const consultas = salvas ? JSON.parse(salvas) : [];
+            consultas.push(novoAtendimento);
+            localStorage.setItem('susi_consultas', JSON.stringify(consultas));
+
+            alert('Agendamento realizado com sucesso!');
+            window.location.href = 'meus-atendimentos.html';
+        }
+
         function falarTexto(texto) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
