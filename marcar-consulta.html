@@ -302,66 +302,48 @@
             display: block;
         }
 
-        /* ESTILOS DO MODAL / AVISO DE CONFIRMAÇÃO */
-        .modal-overlay {
-            display: none;
+        /* --- ESTILOS DO MODAL / AVISO DE CONFIRMAÇÃO --- */
+        #modal-confirmacao {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(15, 23, 42, 0.4);
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(15, 23, 42, 0.5);
             backdrop-filter: blur(4px);
-            z-index: 9999;
+            z-index: 99999;
             align-items: center;
             justify-content: center;
-        }
-
-        .modal-overlay.ativo {
-            display: flex;
         }
 
         .modal-card {
             background: #ffffff;
             border-radius: 28px;
             padding: 32px 28px 28px;
-            max-width: 420px;
+            max-width: 400px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            animation: popIn 0.25s ease-out;
-        }
-
-        @keyframes popIn {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
         }
 
         .modal-icone {
-            font-size: 48px;
+            font-size: 52px;
             margin-bottom: 12px;
             display: block;
-            line-height: 1;
         }
 
         .modal-titulo {
-            font-size: 1.45rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #0f172a;
-            margin: 0 0 12px 0;
+            margin: 0 0 10px 0;
         }
 
         .modal-subtitulo {
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             color: #64748b;
-            margin: 0 0 28px 0;
-            line-height: 1.45;
+            margin: 0 0 25px 0;
+            line-height: 1.4;
         }
 
         .modal-botoes {
@@ -372,35 +354,25 @@
         .btn-modal-voltar {
             flex: 1;
             padding: 14px;
-            border-radius: 14px;
+            border-radius: 12px;
             border: none;
             background-color: #f1f5f9;
             color: #334155;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-modal-voltar:hover {
-            background-color: #e2e8f0;
         }
 
         .btn-modal-confirmar {
             flex: 1.2;
             padding: 14px;
-            border-radius: 14px;
+            border-radius: 12px;
             border: none;
             background-color: #0088cc;
             color: #ffffff;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-modal-confirmar:hover {
-            background-color: #0077b5;
         }
     </style>
 </head>
@@ -513,11 +485,11 @@
 
     </main>
 
-    <!-- MODAL DE CONFIRMAÇÃO DE AGENDAMENTO -->
-    <div id="modal-confirmacao" class="modal-overlay">
+    <!-- CAIXA DE CONFIRMAÇÃO (MODAL) -->
+    <div id="modal-confirmacao" style="display: none;">
         <div class="modal-card">
-            <span class="modal-icone">📅</span>
-            <h2 class="modal-titulo">Marcar Consulta</h2>
+            <span class="modal-icone">📋</span>
+            <h2 class="modal-titulo">Confirmar Consulta</h2>
             <p class="modal-subtitulo">Tem certeza de que deseja realizar este agendamento?</p>
             <div class="modal-botoes">
                 <button type="button" class="btn-modal-voltar" onclick="fecharModal()">Voltar</button>
@@ -601,11 +573,12 @@
                 if (passoAtual === 3 && !tipoSelecionado) return alert('Por favor, selecione o tipo de consulta.');
                 if (passoAtual === 4 && !document.getElementById('input-motivo').value.trim()) return alert('Por favor, descreva o motivo ou sintoma.');
                 if (passoAtual === 5 && !medicoSelecionado) return alert('Por favor, selecione um médico.');
-            }
-
-            if (passoAtual + direcao > totalPassos) {
-                abrirModal();
-                return;
+                
+                // Se clicar em "Concluir" no Passo 5, exibe o Modal em vez de redirecionar imediatamente
+                if (passoAtual === totalPassos) {
+                    abrirModal();
+                    return;
+                }
             }
 
             document.getElementById(`passo-${passoAtual}`).classList.remove('ativo');
@@ -622,11 +595,11 @@
         }
 
         function abrirModal() {
-            document.getElementById('modal-confirmacao').classList.add('ativo');
+            document.getElementById('modal-confirmacao').style.display = 'flex';
         }
 
         function fecharModal() {
-            document.getElementById('modal-confirmacao').classList.remove('ativo');
+            document.getElementById('modal-confirmacao').style.display = 'none';
         }
 
         function calcularNivelUrgencia(idade, temperatura, motivo) {
