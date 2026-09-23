@@ -301,6 +301,107 @@
         .passo-conteudo.ativo {
             display: block;
         }
+
+        /* ESTILOS DO MODAL / AVISO DE CONFIRMAÇÃO */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.ativo {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 32px 28px 28px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            animation: popIn 0.25s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-icone {
+            font-size: 48px;
+            margin-bottom: 12px;
+            display: block;
+            line-height: 1;
+        }
+
+        .modal-titulo {
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 12px 0;
+        }
+
+        .modal-subtitulo {
+            font-size: 0.98rem;
+            color: #64748b;
+            margin: 0 0 28px 0;
+            line-height: 1.45;
+        }
+
+        .modal-botoes {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-modal-voltar {
+            flex: 1;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            background-color: #f1f5f9;
+            color: #334155;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-modal-voltar:hover {
+            background-color: #e2e8f0;
+        }
+
+        .btn-modal-confirmar {
+            flex: 1.2;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            background-color: #0088cc;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-modal-confirmar:hover {
+            background-color: #0077b5;
+        }
     </style>
 </head>
 <body>
@@ -412,6 +513,19 @@
 
     </main>
 
+    <!-- MODAL DE CONFIRMAÇÃO DE AGENDAMENTO -->
+    <div id="modal-confirmacao" class="modal-overlay">
+        <div class="modal-card">
+            <span class="modal-icone">📅</span>
+            <h2 class="modal-titulo">Marcar Consulta</h2>
+            <p class="modal-subtitulo">Tem certeza de que deseja realizar este agendamento?</p>
+            <div class="modal-botoes">
+                <button type="button" class="btn-modal-voltar" onclick="fecharModal()">Voltar</button>
+                <button type="button" class="btn-modal-confirmar" onclick="salvarAtendimento()">Sim, Confirmar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         let passoAtual = 1;
         const totalPassos = 5;
@@ -489,13 +603,13 @@
                 if (passoAtual === 5 && !medicoSelecionado) return alert('Por favor, selecione um médico.');
             }
 
-            document.getElementById(`passo-${passoAtual}`).classList.remove('ativo');
-            passoAtual += direcao;
-
-            if (passoAtual > totalPassos) {
-                salvarAtendimento();
+            if (passoAtual + direcao > totalPassos) {
+                abrirModal();
                 return;
             }
+
+            document.getElementById(`passo-${passoAtual}`).classList.remove('ativo');
+            passoAtual += direcao;
 
             document.getElementById(`passo-${passoAtual}`).classList.add('ativo');
             const porcentagem = (passoAtual / totalPassos) * 100;
@@ -505,6 +619,14 @@
 
             document.getElementById('btn-voltar').style.display = passoAtual > 1 ? 'block' : 'none';
             document.getElementById('btn-avancar').innerText = passoAtual === totalPassos ? 'Concluir Agendamento ✔' : 'Avançar →';
+        }
+
+        function abrirModal() {
+            document.getElementById('modal-confirmacao').classList.add('ativo');
+        }
+
+        function fecharModal() {
+            document.getElementById('modal-confirmacao').classList.remove('ativo');
         }
 
         function calcularNivelUrgencia(idade, temperatura, motivo) {
@@ -547,7 +669,7 @@
             consultas.push(novoAtendimento);
             localStorage.setItem('susi_consultas', JSON.stringify(consultas));
 
-            alert('Agendamento realizado com sucesso!');
+            fecharModal();
             window.location.href = 'meus-atendimentos.html';
         }
 
